@@ -20,5 +20,5 @@
 │   └── main.js            # 核心逻辑（数据加载、分类渲染、全局搜索）
 ├── data/
 │   └── all.json           # 所有算法模板的数据源（含26个分类）
-├── index.html             # 网页主入口
-└── README.md              # 项目说明文档
+├── README.md              # 项目说明文档
+└── index.html             # 网页主入口
