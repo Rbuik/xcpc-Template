@@ -150,6 +150,7 @@ function highlightCode(code) {
         let line = lines[i].trim();
         if (line === '') continue;
 
+        // 核心修改：只要这行以 < 开头，就变蓝并去掉 <
         if (line.startsWith('<')) {
             let titleText = line.substring(1).trim();
             lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + titleText + '</span>';
