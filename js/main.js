@@ -30,7 +30,6 @@ async function init() {
         const homeA = document.createElement('a');
         homeA.href = '#';
         homeA.textContent = '🏠 首页';
-        homeA.classList.add('active'); // 默认高亮
         
         homeA.onclick = (e) => {
             e.preventDefault();
@@ -38,6 +37,7 @@ async function init() {
             homeA.classList.add('active');
             searchInput.value = ''; 
             codeContainer.innerHTML = welcomeHTML;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
@@ -60,7 +60,9 @@ async function init() {
             categoryList.appendChild(li);
         });
 
-        // 3. 默认显示欢迎首页
+        // 3. 强制初始化：默认高亮首页，并展示欢迎页面
+        document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
+        homeA.classList.add('active');
         codeContainer.innerHTML = welcomeHTML;
 
     } catch (error) {
@@ -79,7 +81,7 @@ function filterCards() {
     if (keyword === '') {
         const activeA = document.querySelector('.sidebar a.active');
         if (activeA) {
-            if (activeA.textContent === '🏠 首页') {
+            if (activeA.textContent.includes('首页')) {
                 codeContainer.innerHTML = welcomeHTML;
             } else {
                 renderCategory(activeA.textContent);
