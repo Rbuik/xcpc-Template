@@ -1,22 +1,32 @@
 [
     {
-        "title": "树的直径 (两次DFS)",
-        "description": "求树上距离最远的两点（边权和）。",
-        "code": "int n,u,v,w,l,r,MaxLen=0;\nvector <pii> G[N];\n\nvoid dfs(int u,int pa,int len){\n    if(len>MaxLen){\n        MaxLen=len;\n        l=u; \n    }\n    for(auto g:G[u]){\n        int v=g.first,w=g.second;\n        if(v==pa) continue;\n        dfs(v,u,len+w);\n    }\n}"
+        "title": "搜索：全排列与子序列",
+        "description": "深搜枚举 n 的全排列及字符串的子序列。",
+        "code": "// 全排列\nvoid dfs(int l,int r,int step){\n    if(step==n){\n        for(int i=0;i<v.size();i++){\n            cout<<v[i]<<\" \";\n        }\n        cout<<endl;\n        return ;\n    }\n    for(int i=l;i<=r;i++){\n        v.push_back(i);\n        dfs(l,r,step+1);\n        v.pop_back();\n    }\n}\n\n// 子序列\nvoid dfs(int start){\n    if(start==n){\n        for(int i=0;i<v.size();i++){\n            cout<<v[i];\n        }\n        cout<<endl;\n        return ;\n    }\n    dfs(start+1);\n    v.push_back(s[start]);\n    dfs(start+1);\n    v.pop_back();\n}"
     },
     {
-        "title": "最近公共祖先 (暴力爬树)",
-        "description": "适用于小数据量。",
-        "code": "vector <int> G[N];\nint st[N],p[N];\n\nvoid dfs(int u,int pa,int step){\n    p[u]=pa;\n    st[u]=step;\n    for(int i=0;i<G[u].size();i++){\n        int v=G[u][i];\n        if(v==pa) continue;\n        dfs(v,u,step+1);\n    }\n}\n\nint LCA(int a,int b){\n    while(st[a]>st[b]) a=p[a];\n    while(st[a]<st[b]) b=p[b];\n    while(a!=b){\n        a=p[a];\n        b=p[b];\n    }\n    return a;\n}"
+        "title": "广搜：连通块与走迷宫",
+        "description": "计算农田农作物区域，以及求迷宫最短路径。",
+        "code": "// 连通块\nvoid bfs(int x,int y){\n    a[x][y]='1';\n    q.push({x,y});\n    while(!q.empty()){\n        p now=q.front();\n        q.pop();\n        for(int i=0;i<4;i++){\n            int xx=now.x+dx[i],yy=now.y+dy[i];\n            if(xx<1 || xx>n || yy<1 || yy>m) continue; \n            if(a[xx][yy]=='R'){\n                a[xx][yy]='1';\n                q.push({xx,yy});\n            }\n        } \n    } \n}\n\n// 走迷宫\nint bfs(int x,int y){\n    a[x][y]='1';\n    q.push({x,y,1});\n    while(!q.empty()){\n        p now=q.front();\n        q.pop();\n        for(int i=0;i<4;i++){\n            int xx=now.x+dx[i],yy=now.y+dy[i];\n            int sstep=now.step+1;\n            if(xx==n && yy==m) return sstep;\n            if(a[xx][yy]=='.'){\n                a[xx][yy]='1';\n                q.push({xx,yy,sstep});\n            }\n        }\n    }\n}"
     },
     {
-        "title": "补充：Dijkstra 最短路 (堆优化)",
-        "description": "求单源最短路径，适用于非负权图。",
-        "code": "int n,m,s;\nint dis[N],vis[N];\nvector <pii> G[N];\n\nvoid dijkstra(){\n    for(int i=1;i<=n;i++) dis[i]=INF;\n    priority_queue <pii,vector<pii>,greater<pii>> q;\n    dis[s]=0;\n    q.push({0,s});\n    while(!q.empty()){\n        int u=q.top().second;\n        q.pop();\n        if(vis[u]) continue;\n        vis[u]=1;\n        for(auto g:G[u]){\n            int v=g.first,w=g.second;\n            if(dis[v]>dis[u]+w){\n                dis[v]=dis[u]+w;\n                q.push({dis[v],v});\n            }\n        }\n    }\n}"
+        "title": "树搜索与LCA",
+        "description": "树上离根最远距离，以及暴力求最近公共祖先。",
+        "code": "// 离根最远距离\nint n,u,v,ans=0;\nvector <int> G[200005];\nvoid dfs(int u,int pa,int step){\n    ans=max(ans,step);\n    for(int i=0;i<G[u].size();i++){\n        int uu=u,vv=G[u][i];\n        int sstep=step+1;\n        if(vv==pa) continue;\n        dfs(vv,uu,sstep);\n    }\n}\n\n// 最近公共祖先\nint st[1005],p[1005];\nvoid dfs_lca(int u,int pa,int step){\n    p[u]=pa;\n    st[u]=step;\n    for(int i=0;i<G[u].size();i++){\n        int v=G[u][i];\n        if(v==pa) continue;\n        dfs_lca(v,u,step+1);\n    }\n}\nint LAC(int a,int b){\n    while(st[a]>st[b]) a=p[a];\n    while(st[a]<st[b]) b=p[b];\n    while(a!=b){\n        a=p[a];\n        b=p[b];\n    }\n    return a;\n}"
     },
     {
-        "title": "补充：Kruskal 最小生成树",
-        "description": "基于并查集，求最小生成树边权和。",
-        "code": "struct Edge{\n    int u,v,w;\n}e[N];\n\nbool cmp(Edge a,Edge b){\n    return a.w<b.w;\n}\n\nint kruskal(){\n    sort(e+1,e+m+1,cmp);\n    for(int i=1;i<=n;i++) pa[i]=i;\n    int cnt=0,ans=0;\n    for(int i=1;i<=m;i++){\n        int ru=find(e[i].u),rv=find(e[i].v);\n        if(ru!=rv){\n            pa[ru]=rv;\n            ans+=e[i].w;\n            cnt++;\n        }\n    }\n    if(cnt==n-1) return ans;\n    return -1;\n}"
+        "title": "图的最短路",
+        "description": "有向图 BFS 最短路径，以及 Dijkstra 最短路。",
+        "code": "// BFS 最短路径（边权为1）\nvoid bfs(int u){\n    q.push(u);\n    dis[u]=1;\n    while(!q.empty()){\n        int u=q.front();\n        q.pop();\n        for(int v:G[u]){\n            if(dis[v]==0){\n                dis[v]=dis[u]+1;\n                q.push(v);\n            }\n        }\n    }\n}\n\n// Dijkstra 最短路（堆优化）\nint dis[N],vis[N];\nvector <pii> G[N];\nvoid dijkstra(int s){\n    for(int i=1;i<=n;i++) dis[i]=INF;\n    priority_queue <pii,vector<pii>,greater<pii>> q;\n    dis[s]=0;\n    q.push({0,s});\n    while(!q.empty()){\n        int u=q.top().second;\n        q.pop();\n        if(vis[u]) continue;\n        vis[u]=1;\n        for(auto g:G[u]){\n            int v=g.first,w=g.second;\n            if(dis[v]>dis[u]+w){\n                dis[v]=dis[u]+w;\n                q.push({dis[v],v});\n            }\n        }\n    }\n}"
+    },
+    {
+        "title": "单调栈与单调队列",
+        "description": "最大矩形面积、每日温度、滑动窗口、最小疲劳值。",
+        "code": "// 最大矩形面积\nint mstack(int h){\n    int ans=0;\n    int prevv[N],nextt[N];\n    pii a[N];\n    stack <pii> s;\n    for(int i=0;i<=m+1;i++){\n        if(i==0 || i==m+1) a[i].first=0;\n        else a[i].first=v[h][i];\n        a[i].second=i;\n    }\n    while(!s.empty()) s.pop();\n    for(int i=0;i<=m+1;i++){\n        while(!s.empty() && a[i].first<s.top().first){\n            nextt[s.top().second]=i;\n            s.pop();\n        }\n        if(!s.empty()){\n            if(a[i].first==s.top().first) prevv[i]=prevv[s.top().second];\n            else prevv[i]=s.top().second;\n        }\n        s.push(a[i]);\n    }\n    for(int i=1;i<=m;i++) ans=max(ans,(nextt[i]-prevv[i]-1)*a[i].first);\n    return ans;\n}\n\n// 每日温度\nvoid mstack(){\n    int ans[N];\n    pii a[N];\n    stack <pii> s;\n    for(int i=1;i<=n;i++){\n        a[i].first=t[i];\n        a[i].second=i;\n    }\n    for(int i=1;i<=n;i++){\n        while(!s.empty() && a[i].first>s.top().first){\n            ans[s.top().second]=i-s.top().second;\n            s.pop();\n        }\n        s.push(a[i]);\n    }\n}\n\n// 滑动窗口\nint n,k;\npii a[N];\ndeque <pii> q;\n// 最小值: \nfor(int i=1;i<=n;i++){\n    while(!q.empty() && q.front().second<=i-k) q.pop_front();\n    while(!q.empty() && a[i].first<q.back().first) q.pop_back();\n    q.push_back(a[i]);\n    if(i>=k) cout<<q.front().first<<\" \";\n}\n\n// 最小疲劳值\nint d[N],dp[N];\n// 核心部分:\n// while(!q.empty() && q.front().second<i-k) q.pop_front();\n// if(!q.empty()){\n//     int fj=q.front().second;\n//     int cost=(d[i]>=d[fj])?1:0;\n//     dp[i]=dp[fj]+cost;\n// }\n// while(!q.empty() && q.back().first>=dp[i]) q.pop_back();\n// q.push_back({dp[i],i});"
+    },
+    {
+        "title": "树形DP、直径与重心",
+        "description": "最大子树和、没有上司的舞会、树的直径、点/边权重心、Kruskal。",
+        "code": "// 最大子树和\nvoid dfs(int u,int pa){\n    dp[u]=a[u];\n    for(int v:G[u]){\n        if(v==pa) continue;\n        dfs(v,u);\n        if(dp[v]>0) dp[u]+=dp[v];\n    }\n    ans=max(ans,dp[u]);\n}\n\n// 没有上司的舞会\nvoid dfs(int u,int pa){\n    dp[u][1]=a[u];\n    for(int v:G[u]){\n        if(v==pa) continue;\n        dfs(v,u);\n        dp[u][0]+=max(dp[v][0],dp[v][1]);\n        dp[u][1]+=dp[v][0];\n    }\n}\n\n// 树的直径\nint MaxLen=0,SeLen=0,l,r;\nvoid dfs(int u,int pa,int len){\n    if(len>MaxLen){\n        SeLen=MaxLen;\n        MaxLen=len;\n        l=u;\n    }\n    else if(len>SeLen) SeLen=len;\n    for(auto g:G[u]){\n        int v=g.first,w=g.second;\n        if(v==pa) continue;\n        dfs(v,u,len+w);\n    }\n}\n\n// 点权重心\nvoid dfs(int u,int pa){\n    dp[u]=1;\n    int sum=0;\n    for(int v:G[u]){\n        if(v==pa) continue;\n        dfs(v,u);\n        dp[u]+=dp[v];\n        sum=max(sum,dp[v]);\n    }\n    sum=max(sum,n-dp[u]);\n    ans=min(ans,sum);\n}\n\n// 边权重心\nvoid dfs(int u,int pa){\n    dp[u]=0;\n    int sum=0;\n    for(auto g:G[u]){\n        int v=g.first,w=g.second;\n        if(v==pa) continue;\n        dfs(v,u);\n        dp[u]+=dp[v]+w;\n        sum=max(sum,dp[v]+w);\n    }\n    sum=max(sum,total-dp[u]);\n    ans=min(ans,sum);\n}\n\n// Kruskal 最小生成树\nstruct Edge{ int u,v,w; }e[N];\nbool cmp(Edge a,Edge b){ return a.w<b.w; }\nint kruskal(){\n    sort(e+1,e+m+1,cmp);\n    for(int i=1;i<=n;i++) pa[i]=i;\n    int cnt=0,ans=0;\n    for(int i=1;i<=m;i++){\n        int ru=find(e[i].u),rv=find(e[i].v);\n        if(ru!=rv){\n            pa[ru]=rv;\n            ans+=e[i].w;\n            cnt++;\n        }\n    }\n    if(cnt==n-1) return ans;\n    return -1;\n}"
     }
 ]
