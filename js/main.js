@@ -20,6 +20,8 @@ async function init() {
         if (!response.ok) throw new Error('网络错误或 all.json 文件不存在');
         
         allData = await response.json();
+        
+        // 提取所有不重复的分类
         const categories = [...new Set(allData.map(item => item.category))];
         
         // 1. 生成“首页”按钮
@@ -58,6 +60,7 @@ async function init() {
             categoryList.appendChild(li);
         });
 
+        // 3. 强制初始化：默认高亮首页，并展示欢迎页面
         document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
         homeA.classList.add('active');
         codeContainer.innerHTML = welcomeHTML;
@@ -154,7 +157,7 @@ function renderData(dataArray) {
             <div class="code-section">
                 <h3>${titleToShow}</h3>
                 <div class="desc">${item.description}</div>
-                <pre><code>${highlightCode(item.code)}</code></pre>
+                <pre><code>${highlightCode(item.code, item.title)}</code></pre>
             </div>
         `;
     });
@@ -173,23 +176,41 @@ function escapeHTML(str) {
     );
 }
 
-// 高亮代码块里的二级标题
-function highlightCode(code) {
+// 精准高亮代码块里的二级标题
+function highlightCode(code, title) {
     let escaped = escapeHTML(code);
     
-    // 按行分割
+    // 把标题拆解，比如 "Sort 与 Math" 拆成 "Sort" 和 "Math"
+    let titles = title.split(/与|和/).map(t => t.trim().replace(/[\(（].*?[\)）]/g, '').trim());
+    
     let lines = escaped.split('\n');
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
         
-        // 如果这一行是以“问”开头，直接跳过（不标蓝）
-        if (line.startsWith('问')) {
-            continue;
+        // 如果这行是空的，跳过
+        if (line === '') continue;
+
+        // 检查这一行是不是我们要的标题
+        let isTitle = false;
+        for(let t of titles) {
+            if (line === t || line === '// ' + t || line === '//' + t) {
+                isTitle = true;
+                break;
+            }
+            // 针对纯中文短句（比如 "最大公约数"）兜底
+            if (/^[\u4e00-\u9fa5]+$/.test(line) && line.length <= 10) {
+                isTitle = true;
+                break;
+            }
         }
 
-        // 匹配纯中文/数字标题，或者以 // 开头的注释
-        if (/^(?:\/\/.*|[\u4e00-\u9fa5a-zA-Z0-9\[\]\(\)\+\-\*\/_：，。！？]+)$/.test(line)) {
-            // 标蓝，且不换行
+        // 如果这一行是以“问”开头，或者包含代码符号（;{}），绝对不标蓝
+        if (line.startsWith('问') || /[;{}]/.test(line)) {
+            isTitle = false;
+        }
+
+        if (isTitle) {
+            // 删除了 display: block; 让标题和后面的代码紧紧挨着
             lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + lines[i] + '</span>';
         }
     }
