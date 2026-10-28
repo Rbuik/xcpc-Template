@@ -19,9 +19,10 @@ header {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* 核心修改：把最大宽度改为 1000px，让右侧不再显得空旷 */
 .container {
     display: flex;
-    max-width: 1400px;
+    max-width: 1000px; 
     margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
@@ -30,7 +31,7 @@ header {
 
 /* 侧边栏 */
 .sidebar {
-    width: 300px;
+    width: 280px; /* 固定左侧宽度 */
     background: white;
     border-radius: 10px;
     padding: 1.5rem;
@@ -98,23 +99,24 @@ header {
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow-x: hidden; /* 防止代码太长撑破容器 */
 }
 
 /* 欢迎首页样式 */
 .welcome {
     text-align: center;
     color: #666;
-    margin-top: 20vh; 
+    margin-top: 15vh; 
 }
 
 .welcome h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
     color: #2c3e50;
 }
 
 .welcome p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
 }
 
