@@ -17,10 +17,10 @@
       "}"
     ]
   },
-  {
+    {
     "category": "基础知识",
-    "title": "String 操作与类型转换",
-    "description": "字符串操作与进制转换",
+    "title": "String 常用操作",
+    "description": "字符串拼接、反转、删除、提取等",
     "code": [
       "拼接：strcat(s1,s2) [把s2接在s1后面]",
       "复制：strcpy(s1,s2) [把s1变成s2]",
@@ -32,21 +32,36 @@
       "提取：s2=s1.substr(idx) [提取到末尾]",
       "带空格输入：getline(cin,s)",
       "b在a中第一次出现的下标：a.find(b)",
-      "结构体字节长度：sizeof(struct p)",
-      "",
-      "类型转换",
+      "结构体字节长度：sizeof(struct p)"
+    ]
+  },
+    {
+    "category": "基础知识",
+    "title": "类型转换",
+    "description": "字符串与整型互转",
+    "code": [
       "string s=to_string(n); 转成字符串",
-      "int n=stoll(s); 字符串转成LL类型",
-      "",
-      "进制转换",
+      "int n=stoll(s); 字符串转成LL类型"
+    ]
+  },
+    {
+    "category": "基础知识",
+    "title": "进制转换",
+    "description": "各种进制互相转换",
+    "code": [
       "printf(\"%lld\", num); 转十进制",
       "printf(\"%llx\", num); 转十六进制 [小写出小写，大写出大写]",
       "printf(\"%llo\", num); 转八进制",
       "int a =stoi(\"1011\",nullptr,2); [二转十]",
       "int b =stoi(\"12\",nullptr,8);   [八转十]",
-      "int c=stoi(\"A3\",nullptr,16);   [十六转十] [long long用stoll]",
-      "",
-      "补零",
+      "int c=stoi(\"A3\",nullptr,16);   [十六转十] [long long用stoll]"
+    ]
+  },
+  {
+    "category": "基础知识",
+    "title": "补零",
+    "description": "C++ 与 C 的输出补零与对齐",
+    "code": [
       "left<<setfill('0')<<setw(4)<<sum;",
       "right<<setfill('0')<<setw(4)<<sum;",
       "左对齐: left<<setw(4)<<sum;",
