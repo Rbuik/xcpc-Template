@@ -173,15 +173,22 @@ function escapeHTML(str) {
     );
 }
 
-// 高亮黑框里面的二级标题
+// 高亮代码块里的二级标题
 function highlightCode(code) {
     let escaped = escapeHTML(code);
     
-    // 正则：匹配纯中文/英文/数字行，或者以 // 开头的行
-    const titleRegex = /^(?:\/\/.*|[\u4e00-\u9fa5a-zA-Z0-9\[\]\(\)\+\-\*\/_：，。！？]+)$/gm;
+    // 按行分割，逐行判断（比正则安全一万倍）
+    let lines = escaped.split('\n');
+    for(let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        // 如果是纯中文/数字标题，或者以 // 开头的注释
+        if (/^(?:\/\/.*|[\u4e00-\u9fa5a-zA-Z0-9\[\]\(\)\+\-\*\/_：，。！？]+)$/.test(line)) {
+            // 直接用字符串拼接，不搞 $1 那一套
+            lines[i] = '<span style="color: #569cd6; font-weight: bold; display: block;">' + lines[i] + '</span>';
+        }
+    }
     
-    // 匹配后套上蓝色的 span
-    return escaped.replace(titleRegex, '<span style="color: #569cd6; font-weight: bold; display: block;">$1</span>');
+    return lines.join('\n');
 }
 
 init();
