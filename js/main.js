@@ -8,8 +8,8 @@ let allData = [];
 const welcomeHTML = `
     <div class="welcome">
         <h2>👋 欢迎使用算法模板库</h2>
-        <p>请在左侧选择分类，或在顶部搜索框中搜索算法关键字。</p>
-        <p>代码风格：C++17 | 使用 <code>#define int long long</code> | 空格排版对齐</p>
+        <p>请在左侧选择分类，或在搜索框中搜索算法关键字。</p>
+        <p>代码风格：C++17 | 使用 <code>#define int long long</code></p>
     </div>
 `;
 
@@ -22,29 +22,28 @@ async function init() {
         
         allData = await response.json();
         
-        // 提取所有不重复的目录名
+        // 提取所有不重复的分类
         const categories = [...new Set(allData.map(item => item.category))];
         
-        // 1. 在左侧最上方生成一个“首页”按钮
+        // 1. 生成“首页”按钮
         const homeLi = document.createElement('li');
         const homeA = document.createElement('a');
         homeA.href = '#';
         homeA.textContent = '🏠 首页';
-        homeA.classList.add('active'); // 默认选中首页
+        homeA.classList.add('active'); // 默认高亮
         
         homeA.onclick = (e) => {
             e.preventDefault();
             document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
             homeA.classList.add('active');
             searchInput.value = ''; 
-            // 显示欢迎界面
             codeContainer.innerHTML = welcomeHTML;
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
 
         // 2. 生成其他分类按钮
-        categories.forEach((catName, index) => {
+        categories.forEach((catName) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
             a.href = '#';
@@ -61,7 +60,7 @@ async function init() {
             categoryList.appendChild(li);
         });
 
-        // 3. 默认显示欢迎首页（而不是直接显示第一个分类）
+        // 3. 默认显示欢迎首页
         codeContainer.innerHTML = welcomeHTML;
 
     } catch (error) {
@@ -69,18 +68,15 @@ async function init() {
     }
 }
 
-// 渲染某个分类下的所有代码
 function renderCategory(catName) {
     const filtered = allData.filter(item => item.category === catName);
     renderData(filtered);
 }
 
-// 全局搜索
 function filterCards() {
     const keyword = searchInput.value.toLowerCase().trim();
     
     if (keyword === '') {
-        // 如果清空搜索，回到当前选中的分类或首页
         const activeA = document.querySelector('.sidebar a.active');
         if (activeA) {
             if (activeA.textContent === '🏠 首页') {
