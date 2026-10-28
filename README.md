@@ -25,14 +25,14 @@
 │   └── main.js            # 核心逻辑（数据加载、分类渲染、全局搜索、字体缩放记忆、代码高亮）
 ├── data/
 │   └── all.json           # 所有算法模板的数据源（含26个分类）
-├── index.html             # 网页主入口
-└── README.md              # 项目说明文档
+├── README.md              # 项目说明文档
+└── index.html             # 网页主入口
 ```
 
 ## 🚀 本地预览与部署
 
-本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
-在线访问：已部署至 GitHub Pages，可直接访问 https://Rbuik.github.io/xcpc-Template/
+- 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
+- 在线访问：已部署至 GitHub Pages，可直接访问 https://Rbuik.github.io/xcpc-Template/
 
 ## 🛠️ 如何添加新算法
 
