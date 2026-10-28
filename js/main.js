@@ -17,24 +17,15 @@ async function init() {
         codeContainer.innerHTML = '<p style="text-align:center; color:#888; margin-top: 20vh;">数据加载中...</p>';
         
         const response = await fetch('data/all.json');
-        if (!response.ok) throw new Error('网络错误或 all.json 文件不存在');
+        if (!response.ok) throw new Error('找不到 data/all.json，请检查路径');
         
-        // 这里加一个容错打印，看看能不能正常拿到 JSON
-        try {
-            allData = await response.json();
-        } catch (e) {
-            console.error("JSON 格式解析失败，请检查 all.json 是否少了逗号、引号等！", e);
-            throw new Error("JSON 解析失败");
-        }
+        allData = await response.json();
         
-        // 确保读取到的是数组
-        if (!Array.isArray(allData)) {
-            throw new Error('JSON 数据格式不正确，最外层必须是数组 []');
-        }
+        if (!Array.isArray(allData)) throw new Error('all.json 最外层必须是数组 []');
 
         const categories = [...new Set(allData.map(item => item.category).filter(Boolean))];
         
-        // 1. 生成“首页”按钮
+        // 生成“首页”按钮
         const homeLi = document.createElement('li');
         const homeA = document.createElement('a');
         homeA.href = '#';
@@ -52,7 +43,7 @@ async function init() {
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
 
-        // 2. 生成其他分类按钮
+        // 生成其他分类按钮
         categories.forEach((catName) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -70,53 +61,17 @@ async function init() {
             categoryList.appendChild(li);
         });
 
-        // 3. 强制初始化：默认高亮首页，并展示欢迎页面
-        document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
-        homeA.classList.add('active');
-        codeContainer.innerHTML = welcomeHTML;
-
+        // 默认选中首页
+        homeA.click();
         initFontSize();
 
     } catch (error) {
-        console.error(error);
-        codeContainer.innerHTML = `<p style="color:red; text-align:center; margin-top:20vh; font-weight:bold;">加载失败：${error.message}<br><br>请按 F12 打开控制台查看详细错误信息，通常是因为 all.json 里多了/少了逗号或引号。</p>`;
+        codeContainer.innerHTML = `<div style="color:red; text-align:center; margin-top:20vh; font-weight:bold;">
+            ❌ 加载失败：${error.message}<br><br>
+            请按 F12 检查控制台。
+        </div>`;
     }
 }
-
-// ================= 核心：字体缩放逻辑 =================
-let currentFontSize = 100; 
-
-function initFontSize() {
-    const savedSize = localStorage.getItem('fontSize');
-    if (savedSize) {
-        currentFontSize = parseInt(savedSize);
-    }
-    applyFontSize();
-}
-
-function changeFontSize(delta) {
-    currentFontSize += delta * 10; 
-    if (currentFontSize < 50) currentFontSize = 50;
-    if (currentFontSize > 250) currentFontSize = 250;
-
-    applyFontSize();
-    localStorage.setItem('fontSize', currentFontSize);
-}
-
-function applyFontSize() {
-    const scale = currentFontSize / 100;
-    
-    const codeElements = document.querySelectorAll('pre code, .desc, .welcome p, .welcome h2');
-    codeElements.forEach(el => {
-        el.style.fontSize = `${scale}em`; 
-    });
-    
-    const menuElements = document.querySelectorAll('.sidebar a');
-    menuElements.forEach(el => {
-        el.style.fontSize = `${scale}em`;
-    });
-}
-// ======================================================
 
 function renderCategory(catName) {
     const filtered = allData.filter(item => item.category === catName);
@@ -166,7 +121,7 @@ function renderData(dataArray) {
             <div class="code-section">
                 <h3>${titleToShow}</h3>
                 <div class="desc">${item.description}</div>
-                <pre><code>${highlightCode(item.code, item.title)}</code></pre>
+                <pre><code>${highlightCode(item.code)}</code></pre>
             </div>
         `;
     });
@@ -186,7 +141,7 @@ function escapeHTML(str) {
 }
 
 // 精准高亮代码块里的二级标题
-function highlightCode(code, title) {
+function highlightCode(code) {
     let rawCode = Array.isArray(code) ? code.join('\n') : code;
     let escaped = escapeHTML(rawCode);
     let lines = escaped.split('\n');
@@ -195,7 +150,6 @@ function highlightCode(code, title) {
         let line = lines[i].trim();
         if (line === '') continue;
 
-        // 只要以 < 开头，就变蓝，并去掉 <
         if (line.startsWith('<')) {
             let titleText = line.substring(1).trim();
             lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + titleText + '</span>';
@@ -205,4 +159,39 @@ function highlightCode(code, title) {
     return lines.join('\n');
 }
 
+// ================= 字体缩放逻辑 =================
+let currentFontSize = 100; 
+
+function initFontSize() {
+    const savedSize = localStorage.getItem('fontSize');
+    if (savedSize) {
+        currentFontSize = parseInt(savedSize);
+    }
+    applyFontSize();
+}
+
+function changeFontSize(delta) {
+    currentFontSize += delta * 10; 
+    if (currentFontSize < 50) currentFontSize = 50;
+    if (currentFontSize > 250) currentFontSize = 250;
+
+    applyFontSize();
+    localStorage.setItem('fontSize', currentFontSize);
+}
+
+function applyFontSize() {
+    const scale = currentFontSize / 100;
+    
+    const codeElements = document.querySelectorAll('pre code, .desc, .welcome p, .welcome h2');
+    codeElements.forEach(el => {
+        el.style.fontSize = `${scale}em`; 
+    });
+    
+    const menuElements = document.querySelectorAll('.sidebar a');
+    menuElements.forEach(el => {
+        el.style.fontSize = `${scale}em`;
+    });
+}
+
+// 启动
 init();
