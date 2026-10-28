@@ -4,7 +4,6 @@ const searchInput = document.getElementById('search-input');
 
 let allData = [];
 
-// 欢迎首页的 HTML
 const welcomeHTML = `
     <div class="welcome">
         <h2>👋 欢迎使用算法模板库</h2>
@@ -21,11 +20,8 @@ async function init() {
         if (!response.ok) throw new Error('网络错误或 all.json 文件不存在');
         
         allData = await response.json();
-        
-        // 提取所有不重复的分类
         const categories = [...new Set(allData.map(item => item.category))];
         
-        // 1. 生成“首页”按钮
         const homeLi = document.createElement('li');
         const homeA = document.createElement('a');
         homeA.href = '#';
@@ -42,7 +38,6 @@ async function init() {
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
 
-        // 2. 生成其他分类按钮
         categories.forEach((catName) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -60,15 +55,44 @@ async function init() {
             categoryList.appendChild(li);
         });
 
-        // 3. 强制初始化：默认高亮首页，并展示欢迎页面
         document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
         homeA.classList.add('active');
         codeContainer.innerHTML = welcomeHTML;
+
+        // 页面初始化时，读取用户上次设置的字体大小
+        initFontSize();
 
     } catch (error) {
         codeContainer.innerHTML = `<p style="color:red; text-align:center; margin-top:20vh;">加载失败：${error.message}</p>`;
     }
 }
+
+// ---- 新增：字体大小控制逻辑 ----
+let currentFontSize = 100; // 默认百分比
+
+function initFontSize() {
+    // 从本地存储读取
+    const savedSize = localStorage.getItem('fontSize');
+    if (savedSize) {
+        currentFontSize = parseInt(savedSize);
+        document.documentElement.style.fontSize = currentFontSize + '%';
+    }
+}
+
+function changeFontSize(delta) {
+    currentFontSize += delta * 10; // 每次增减 10%
+    
+    // 限制在 70% 到 150% 之间
+    if (currentFontSize < 70) currentFontSize = 70;
+    if (currentFontSize > 150) currentFontSize = 150;
+
+    // 应用到整个网页的根元素 (rem 会随之缩放)
+    document.documentElement.style.fontSize = currentFontSize + '%';
+    
+    // 保存到本地存储
+    localStorage.setItem('fontSize', currentFontSize);
+}
+// ------------------------------
 
 function renderCategory(catName) {
     const filtered = allData.filter(item => item.category === catName);
