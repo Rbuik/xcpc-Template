@@ -10,8 +10,9 @@ const categoryList = document.getElementById('category-list');
 const codeContainer = document.getElementById('code-container');
 const searchInput = document.getElementById('search-input');
 
-// 保存当前分类的所有数据，用于搜索过滤
 let currentData = [];
+// 用于缓存所有加载过的数据，方便全局搜索
+let allDataCache = {}; 
 
 // 初始化侧边栏
 function initSidebar() {
@@ -23,12 +24,9 @@ function initSidebar() {
         a.dataset.id = source.id;
         a.onclick = (e) => {
             e.preventDefault();
-            // 切换高亮
             document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
             a.classList.add('active');
-            // 切换分类时，清空搜索框
-            searchInput.value = ''; 
-            // 加载内容
+            searchInput.value = ''; // 切换分类时清空搜索框
             loadContent(source.file);
         };
         li.appendChild(a);
@@ -36,27 +34,79 @@ function initSidebar() {
     });
 }
 
-// 加载并渲染代码内容
+// 加载并渲染单个分类的内容
 async function loadContent(file) {
     try {
+        // 如果缓存里有，直接用缓存
+        if (allDataCache[file]) {
+            currentData = allDataCache[file];
+            renderData(currentData);
+            return;
+        }
+
         codeContainer.innerHTML = '<p style="text-align:center; color:#888;">加载中...</p>';
-        
         const response = await fetch(file);
         if (!response.ok) throw new Error('网络错误或文件不存在');
         
         currentData = await response.json();
+        allDataCache[file] = currentData; // 存入缓存
         
-        if (currentData.length === 0) {
-            codeContainer.innerHTML = '<p>该分类下暂无代码。</p>';
-            return;
-        }
-
-        // 初次渲染全部数据
         renderData(currentData);
         
     } catch (error) {
-        codeContainer.innerHTML = `<p style="color:red;">加载失败：${error.message}。请检查你的文件是否存在或路径是否正确。</p>`;
+        codeContainer.innerHTML = `<p style="color:red;">加载失败：${error.message}。请检查文件路径是否正确。</p>`;
     }
+}
+
+// 全局搜索逻辑
+async function filterCards() {
+    const keyword = searchInput.value.toLowerCase().trim();
+    
+    // 如果搜索框为空，显示当前分类的数据
+    if (keyword === '') {
+        renderData(currentData);
+        return;
+    }
+
+    codeContainer.innerHTML = '<p style="text-align:center; color:#888;">全局搜索中...</p>';
+
+    let searchResults = [];
+
+    // 遍历所有的分类文件
+    for (let source of dataSources) {
+        try {
+            let fileData = allDataCache[source.file];
+            
+            // 如果还没下载过这个文件，先下载
+            if (!fileData) {
+                const response = await fetch(source.file);
+                if (response.ok) {
+                    fileData = await response.json();
+                    allDataCache[source.file] = fileData;
+                }
+            }
+
+            // 在数据中匹配标题、描述或代码内容
+            if (fileData) {
+                const matched = fileData.filter(item => {
+                    return item.title.toLowerCase().includes(keyword) || 
+                           item.description.toLowerCase().includes(keyword) ||
+                           item.code.toLowerCase().includes(keyword);
+                });
+                
+                // 给匹配的结果加上分类前缀，例如 [数据结构] 树状数组
+                matched.forEach(item => {
+                    item.title = `[${source.name.split(' ')[1]}] ${item.title}`;
+                });
+
+                searchResults = searchResults.concat(matched);
+            }
+        } catch (e) {
+            console.error("搜索出错:", e);
+        }
+    }
+
+    renderData(searchResults);
 }
 
 // 将数据渲染成 HTML
@@ -78,28 +128,12 @@ function renderData(dataArray) {
     });
     
     codeContainer.innerHTML = html;
-    // 每次渲染完，滚动回最顶部
-    codeContainer.scrollTop = 0;
-}
-
-// 搜索过滤逻辑
-function filterCards() {
-    const keyword = searchInput.value.toLowerCase().trim();
     
-    // 如果搜索框为空，显示当前分类的所有内容
-    if (keyword === '') {
-        renderData(currentData);
-        return;
-    }
-
-    // 过滤标题或描述包含关键词的内容
-    const filteredData = currentData.filter(item => {
-        return item.title.toLowerCase().includes(keyword) || 
-               item.description.toLowerCase().includes(keyword) ||
-               item.code.toLowerCase().includes(keyword); // 支持在代码内容中搜索
+    // 平滑回到网页顶部
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
-
-    renderData(filteredData);
 }
 
 // 防止 XSS 并保留代码格式
