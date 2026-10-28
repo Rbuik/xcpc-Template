@@ -22,6 +22,7 @@ async function init() {
         allData = await response.json();
         const categories = [...new Set(allData.map(item => item.category))];
         
+        // 1. 生成“首页”按钮
         const homeLi = document.createElement('li');
         const homeA = document.createElement('a');
         homeA.href = '#';
@@ -34,10 +35,12 @@ async function init() {
             searchInput.value = ''; 
             codeContainer.innerHTML = welcomeHTML;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            applyFontSize(); // 重新应用字体缩放
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
 
+        // 2. 生成其他分类按钮
         categories.forEach((catName) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -55,11 +58,12 @@ async function init() {
             categoryList.appendChild(li);
         });
 
+        // 3. 初始化默认首页
         document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
         homeA.classList.add('active');
         codeContainer.innerHTML = welcomeHTML;
 
-        // 页面初始化时，读取用户上次设置的字体大小
+        // 4. 初始化字体大小
         initFontSize();
 
     } catch (error) {
@@ -67,32 +71,44 @@ async function init() {
     }
 }
 
-// ---- 新增：字体大小控制逻辑 ----
-let currentFontSize = 100; // 默认百分比
+// ================= 核心：字体缩放逻辑 =================
+let currentFontSize = 100; 
 
 function initFontSize() {
-    // 从本地存储读取
     const savedSize = localStorage.getItem('fontSize');
     if (savedSize) {
         currentFontSize = parseInt(savedSize);
-        document.documentElement.style.fontSize = currentFontSize + '%';
     }
+    applyFontSize();
 }
 
 function changeFontSize(delta) {
-    currentFontSize += delta * 10; // 每次增减 10%
-    
-    // 限制在 70% 到 150% 之间
+    currentFontSize += delta * 10; 
+    // 限制缩放范围 70% 到 150%
     if (currentFontSize < 70) currentFontSize = 70;
     if (currentFontSize > 150) currentFontSize = 150;
 
-    // 应用到整个网页的根元素 (rem 会随之缩放)
-    document.documentElement.style.fontSize = currentFontSize + '%';
-    
-    // 保存到本地存储
+    applyFontSize();
     localStorage.setItem('fontSize', currentFontSize);
 }
-// ------------------------------
+
+function applyFontSize() {
+    const scale = currentFontSize / 100;
+    
+    // 缩放右侧的代码文字和说明文字（1rem 基准）
+    const codeElements = document.querySelectorAll('pre code, .desc, .welcome p, .welcome h2');
+    codeElements.forEach(el => {
+        // 这里用 em 或 rem，避免影响外层容器的宽高
+        el.style.fontSize = `${scale}em`; 
+    });
+    
+    // 缩放左侧菜单文字
+    const menuElements = document.querySelectorAll('.sidebar a');
+    menuElements.forEach(el => {
+        el.style.fontSize = `${scale}em`;
+    });
+}
+// ======================================================
 
 function renderCategory(catName) {
     const filtered = allData.filter(item => item.category === catName);
@@ -147,6 +163,8 @@ function renderData(dataArray) {
     });
     
     codeContainer.innerHTML = html;
+    // 每次渲染完内容，必须重新执行一次字体缩放
+    applyFontSize();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
