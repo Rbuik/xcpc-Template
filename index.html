@@ -16,23 +16,22 @@
         <!-- 左侧导航 -->
         <aside class="sidebar">
             <h2>📚 目录分类</h2>
+            
+            <!-- 左侧全局搜索框 -->
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="🔍 全局搜索..." oninput="filterCards()">
+            </div>
+            
             <ul id="category-list">
                 <!-- 由 JS 动态生成 -->
             </ul>
         </aside>
 
         <!-- 右侧代码区 -->
-        <main class="content">
-            <!-- 搜索框 -->
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="🔍 搜索算法名称或描述（如：线段树、STL、背包）..." oninput="filterCards()">
-            </div>
-            
-            <div id="code-container">
-                <div class="welcome">
-                    <h2>👋 欢迎使用</h2>
-                    <p>请点击左侧分类查看对应的算法代码及解析。</p>
-                </div>
+        <main class="content" id="code-container">
+            <div class="welcome">
+                <h2>👋 欢迎使用</h2>
+                <p>请点击左侧分类查看对应的算法代码及解析。</p>
             </div>
         </main>
     </div>
