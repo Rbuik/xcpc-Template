@@ -181,9 +181,15 @@ function highlightCode(code) {
     let lines = escaped.split('\n');
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
-        // 如果是纯中文/数字标题，或者以 // 开头的注释
+        
+        // 如果这一行是以“问”开头，直接跳过（不标蓝）
+        if (line.startsWith('问')) {
+            continue;
+        }
+
+        // 匹配纯中文/数字标题，或者以 // 开头的注释
         if (/^(?:\/\/.*|[\u4e00-\u9fa5a-zA-Z0-9\[\]\(\)\+\-\*\/_：，。！？]+)$/.test(line)) {
-            // 删除了 display: block; 让标题和后面的代码紧凑挨着
+            // 标蓝，且不换行
             lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + lines[i] + '</span>';
         }
     }
