@@ -1,0 +1,17 @@
+[
+    {
+        "title": "并查集 (路径压缩)",
+        "description": "处理集合合并与连通性查询。",
+        "code": "int pa[N];\n\nint find(int x){\n    if(x==pa[x]){\n        return x;\n    }\n    return pa[x]=find(pa[x]);\n}\n\nvoid merge(int x,int y){\n    int rx=find(x),ry=find(y);\n    if(rx!=ry){\n        pa[rx]=ry;\n    }\n}"
+    },
+    {
+        "title": "树状数组 (前缀和)",
+        "description": "支持单点修改，区间查询。",
+        "code": "int n,m,op,x,k,y;\nint a[N],c[N];\n\nint lowbit(int x){\n    return x&(-x);\n}\n\nvoid add(int i,int k){\n    while(i<=n){\n        c[i]+=k;\n        i+=lowbit(i);\n    }\n}\n\nint sum(int i){\n    int s=0;\n    while(i){\n        s+=c[i];\n        i-=lowbit(i);\n    }\n    return s;\n}"
+    },
+    {
+        "title": "ST表 (区间最值)",
+        "description": "O(1) 离线查询区间最大值。",
+        "code": "int n,m,a,l,r;\nint dp[N][20];\n\nvoid ST(){\n    for(int j=1;j<=log2(n);j++){\n        for(int i=1;i<=n-(1<<j)+1;i++){\n            dp[i][j]=max(dp[i][j-1],dp[i+(1<<(j-1))][j-1]);\n        }\n    }\n}\n\nint RMQ(int l,int r){\n    int k=log2(r-l+1);\n    int t=max(dp[l][k],dp[r-(1<<k)+1][k]);\n    return t;\n}"
+    }
+]

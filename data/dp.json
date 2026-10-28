@@ -1,0 +1,17 @@
+[
+    {
+        "title": "01背包 (一维数组)",
+        "description": "体积 j 需倒序枚举。",
+        "code": "for(int i=1;i<=n;i++){\n    for(int j=V;j>=w[i];j--){\n        dp[j]=max(dp[j],v[i]+dp[j-w[i]]);\n    }\n}"
+    },
+    {
+        "title": "最长公共子序列 (LCS)",
+        "description": "求两个字符串的最长公共子序列。",
+        "code": "for(int i=1;i<=as;i++){\n    for(int j=1;j<=bs;j++){\n        if(a[i-1]==b[j-1]){\n            dp[i][j]=dp[i-1][j-1]+1;\n        }\n        else{\n            dp[i][j]=max(dp[i-1][j],dp[i][j-1]);\n        }\n    }\n}"
+    },
+    {
+        "title": "最长递增子序列 (LIS)",
+        "description": "补充：O(n log n) 解法。",
+        "code": "int len=0;\nfor(int i=1;i<=n;i++){\n    int pos=lower_bound(dp+1,dp+len+1,a[i])-dp;\n    dp[pos]=a[i];\n    if(pos>len) len=pos;\n}\ncout<<len<<endl;"
+    }
+]

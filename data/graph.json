@@ -1,0 +1,22 @@
+[
+    {
+        "title": "树的直径 (两次DFS)",
+        "description": "求树上距离最远的两点（边权和）。",
+        "code": "int n,u,v,w,l,r,MaxLen=0;\nvector <pii> G[N];\n\nvoid dfs(int u,int pa,int len){\n    if(len>MaxLen){\n        MaxLen=len;\n        l=u; \n    }\n    for(auto g:G[u]){\n        int v=g.first,w=g.second;\n        if(v==pa) continue;\n        dfs(v,u,len+w);\n    }\n}"
+    },
+    {
+        "title": "最近公共祖先 (暴力爬树)",
+        "description": "适用于小数据量。",
+        "code": "vector <int> G[N];\nint st[N],p[N];\n\nvoid dfs(int u,int pa,int step){\n    p[u]=pa;\n    st[u]=step;\n    for(int i=0;i<G[u].size();i++){\n        int v=G[u][i];\n        if(v==pa) continue;\n        dfs(v,u,step+1);\n    }\n}\n\nint LCA(int a,int b){\n    while(st[a]>st[b]) a=p[a];\n    while(st[a]<st[b]) b=p[b];\n    while(a!=b){\n        a=p[a];\n        b=p[b];\n    }\n    return a;\n}"
+    },
+    {
+        "title": "补充：Dijkstra 最短路 (堆优化)",
+        "description": "求单源最短路径，适用于非负权图。",
+        "code": "int n,m,s;\nint dis[N],vis[N];\nvector <pii> G[N];\n\nvoid dijkstra(){\n    for(int i=1;i<=n;i++) dis[i]=INF;\n    priority_queue <pii,vector<pii>,greater<pii>> q;\n    dis[s]=0;\n    q.push({0,s});\n    while(!q.empty()){\n        int u=q.top().second;\n        q.pop();\n        if(vis[u]) continue;\n        vis[u]=1;\n        for(auto g:G[u]){\n            int v=g.first,w=g.second;\n            if(dis[v]>dis[u]+w){\n                dis[v]=dis[u]+w;\n                q.push({dis[v],v});\n            }\n        }\n    }\n}"
+    },
+    {
+        "title": "补充：Kruskal 最小生成树",
+        "description": "基于并查集，求最小生成树边权和。",
+        "code": "struct Edge{\n    int u,v,w;\n}e[N];\n\nbool cmp(Edge a,Edge b){\n    return a.w<b.w;\n}\n\nint kruskal(){\n    sort(e+1,e+m+1,cmp);\n    for(int i=1;i<=n;i++) pa[i]=i;\n    int cnt=0,ans=0;\n    for(int i=1;i<=m;i++){\n        int ru=find(e[i].u),rv=find(e[i].v);\n        if(ru!=rv){\n            pa[ru]=rv;\n            ans+=e[i].w;\n            cnt++;\n        }\n    }\n    if(cnt==n-1) return ans;\n    return -1;\n}"
+    }
+]

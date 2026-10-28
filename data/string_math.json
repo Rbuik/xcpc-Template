@@ -1,0 +1,17 @@
+[
+    {
+        "title": "快速幂",
+        "description": "求 a^b mod m。",
+        "code": "int qpow(int a,int b,int mod){\n    int sum=1;\n    while(b){\n        if(b&1){\n            sum=(sum*a)%mod;\n        }\n        a=(a*a)%mod;\n        b>>=1;\n    }\n    return sum;\n}"
+    },
+    {
+        "title": "最大公约数 (GCD)",
+        "description": "辗转相除法。",
+        "code": "int gcd(int a,int b){\n    if(b==0) return a;\n    return gcd(b,a%b);\n}"
+    },
+    {
+        "title": "线性筛素数",
+        "description": "O(n) 复杂度筛出 1~n 的所有素数。",
+        "code": "vector <int> p;\nvector <char> isp(n+1,1);\n\nfor(int i=2;i<=n;i++){\n    if(isp[i]){\n        p.push_back(i);\n    }\n    for(int j=0;j<p.size()&&i*p[j]<=n;j++){\n        isp[i*p[j]]=0;\n        if(i%p[j]==0) break;\n    }\n}"
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "title": "竞赛常用框架",
+        "description": "包含万能头、取消流同步、宏定义。",
+        "code": "#include<bits/stdc++.h>\nusing namespace std;\n#define int long long\n#define endl \"\\n\"\n\nsigned main(){\n    \n    ios::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    \n    return 0;\n}"
+    },
+    {
+        "title": "快速排序 (Quick Sort)",
+        "description": "标准快排模板。",
+        "code": "int a[N];\n\nint quick(int l,int r){\n    int p=a[l],i=l,j=r;\n    while(i<j){\n        while(j>i && a[j]>p) j--;\n        while(i<j && a[i]<=p) i++;\n        swap(a[i],a[j]);\n    }\n    swap(a[l],a[j]);\n    return j;\n}\n\nvoid quick_sort(int l,int r){\n    if(r<=l) return;\n    int mid=quick(l,r);\n    quick_sort(l,mid-1);\n    quick_sort(mid+1,r);\n}"
+    }
+]
