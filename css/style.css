@@ -80,6 +80,30 @@ header {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
+/* 搜索框样式 */
+.search-bar {
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.search-bar input:focus {
+    border-color: #3498db;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.15);
+}
+
 .welcome {
     text-align: center;
     color: #666;
