@@ -74,7 +74,7 @@
     "category": "基础知识",
     "title": "Sort 排序",
     "description": "数字排序与字符排序",
-    "code": [
+        "code": [
       "< 数字排序",
       "sort(a,a+n) 从小到大",
       "sort(a,a+n,greater<int>()) 从大到小",
