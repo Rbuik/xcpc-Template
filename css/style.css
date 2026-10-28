@@ -19,11 +19,11 @@ header {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* 核心修改：把最大宽度改为 1000px，让右侧不再显得空旷 */
+/* 恢复宽屏居中，与截图完全一致 */
 .container {
     display: flex;
-    max-width: 1000px; 
-    margin: 2rem auto;
+    max-width: 1400px; /* 保证足够宽 */
+    margin: 2rem auto; /* 完美居中 */
     padding: 0 1rem;
     gap: 2rem;
     min-height: 80vh;
@@ -31,7 +31,7 @@ header {
 
 /* 侧边栏 */
 .sidebar {
-    width: 280px; /* 固定左侧宽度 */
+    width: 280px;
     background: white;
     border-radius: 10px;
     padding: 1.5rem;
@@ -49,7 +49,6 @@ header {
     color: #2c3e50;
 }
 
-/* 左侧搜索框样式 */
 .search-box {
     margin-bottom: 1.5rem;
 }
@@ -99,32 +98,25 @@ header {
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    overflow-x: hidden; /* 防止代码太长撑破容器 */
+    overflow-x: hidden;
 }
 
-/* 欢迎首页样式 */
+/* 首页欢迎语居中样式 */
 .welcome {
     text-align: center;
     color: #666;
-    margin-top: 15vh; 
+    margin-top: 25vh; 
 }
 
 .welcome h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
     color: #2c3e50;
 }
 
 .welcome p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
-}
-
-.welcome code {
-    background: #e1f0fa;
-    color: #3498db;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
 }
 
 /* 代码块样式 */
@@ -135,8 +127,6 @@ header {
 .code-section h3 {
     color: #2c3e50;
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
     font-size: 1.15rem;
 }
 
