@@ -27,6 +27,7 @@
 │   └── all.json           # 所有算法模板的数据源（含26个分类）
 ├── index.html             # 网页主入口
 └── README.md              # 项目说明文档
+```
 
 🚀 本地预览与部署
 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
