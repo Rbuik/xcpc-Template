@@ -19,9 +19,20 @@ async function init() {
         const response = await fetch('data/all.json');
         if (!response.ok) throw new Error('网络错误或 all.json 文件不存在');
         
-        allData = await response.json();
+        // 这里加一个容错打印，看看能不能正常拿到 JSON
+        try {
+            allData = await response.json();
+        } catch (e) {
+            console.error("JSON 格式解析失败，请检查 all.json 是否少了逗号、引号等！", e);
+            throw new Error("JSON 解析失败");
+        }
         
-        const categories = [...new Set(allData.map(item => item.category))];
+        // 确保读取到的是数组
+        if (!Array.isArray(allData)) {
+            throw new Error('JSON 数据格式不正确，最外层必须是数组 []');
+        }
+
+        const categories = [...new Set(allData.map(item => item.category).filter(Boolean))];
         
         // 1. 生成“首页”按钮
         const homeLi = document.createElement('li');
@@ -67,7 +78,8 @@ async function init() {
         initFontSize();
 
     } catch (error) {
-        codeContainer.innerHTML = `<p style="color:red; text-align:center; margin-top:20vh;">加载失败：${error.message}</p>`;
+        console.error(error);
+        codeContainer.innerHTML = `<p style="color:red; text-align:center; margin-top:20vh; font-weight:bold;">加载失败：${error.message}<br><br>请按 F12 打开控制台查看详细错误信息，通常是因为 all.json 里多了/少了逗号或引号。</p>`;
     }
 }
 
