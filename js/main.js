@@ -35,7 +35,7 @@ async function init() {
             searchInput.value = ''; 
             codeContainer.innerHTML = welcomeHTML;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            applyFontSize(); // 重新应用字体缩放
+            applyFontSize();
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
@@ -58,12 +58,10 @@ async function init() {
             categoryList.appendChild(li);
         });
 
-        // 3. 初始化默认首页
         document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
         homeA.classList.add('active');
         codeContainer.innerHTML = welcomeHTML;
 
-        // 4. 初始化字体大小
         initFontSize();
 
     } catch (error) {
@@ -84,8 +82,7 @@ function initFontSize() {
 
 function changeFontSize(delta) {
     currentFontSize += delta * 10; 
-    
-    // 核心：把限制范围扩大到 50% 到 250%
+    // 字体范围扩大到 50% 到 250%
     if (currentFontSize < 50) currentFontSize = 50;
     if (currentFontSize > 250) currentFontSize = 250;
 
@@ -96,10 +93,9 @@ function changeFontSize(delta) {
 function applyFontSize() {
     const scale = currentFontSize / 100;
     
-    // 缩放右侧的代码文字和说明文字（1rem 基准）
+    // 缩放右侧的代码文字和说明文字
     const codeElements = document.querySelectorAll('pre code, .desc, .welcome p, .welcome h2');
     codeElements.forEach(el => {
-        // 这里用 em 或 rem，避免影响外层容器的宽高
         el.style.fontSize = `${scale}em`; 
     });
     
@@ -158,13 +154,12 @@ function renderData(dataArray) {
             <div class="code-section">
                 <h3>${titleToShow}</h3>
                 <div class="desc">${item.description}</div>
-                <pre><code>${escapeHTML(item.code)}</code></pre>
+                <pre><code>${highlightCode(item.code)}</code></pre>
             </div>
         `;
     });
     
     codeContainer.innerHTML = html;
-    // 每次渲染完内容，必须重新执行一次字体缩放
     applyFontSize();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -176,6 +171,17 @@ function escapeHTML(str) {
             "'": '&#39;', '"': '&quot;'
         }[tag] || tag)
     );
+}
+
+// 高亮黑框里面的二级标题
+function highlightCode(code) {
+    let escaped = escapeHTML(code);
+    
+    // 正则：匹配纯中文/英文/数字行，或者以 // 开头的行
+    const titleRegex = /^(?:\/\/.*|[\u4e00-\u9fa5a-zA-Z0-9\[\]\(\)\+\-\*\/_：，。！？]+)$/gm;
+    
+    // 匹配后套上蓝色的 span
+    return escaped.replace(titleRegex, '<span style="color: #569cd6; font-weight: bold; display: block;">$1</span>');
 }
 
 init();
