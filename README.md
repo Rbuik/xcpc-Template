@@ -29,14 +29,14 @@
 └── README.md              # 项目说明文档
 ```
 
-🚀 本地预览与部署
-本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
+## 🚀 本地预览与部署
 
+本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
 在线访问：已部署至 GitHub Pages，可直接访问 https://Rbuik.github.io/xcpc-Template/
 
-🛠️ 如何添加新算法
-所有的算法数据都存储在 data/all.json 中。你只需按照以下 JSON 格式追加即可：
+## 🛠️ 如何添加新算法
 
+所有的算法数据都存储在 data/all.json 中。你只需按照以下 JSON 格式追加即可：
 json
 {
     "category": "基础模板",
@@ -45,14 +45,10 @@ json
     "code": "// 在这里写你的 C++ 代码\n#include<bits/stdc++.h>..."
 }
 注意：
-
 JSON 格式中的换行必须使用 \n。
-
 双引号必须转义为 \"。
-
 最后一条记录后面不能有逗号。
 
-📄 开源协议
-本项目采用 MIT License 开源协议。代码仅用于个人学习与竞赛复习使用。
+## 📄 开源协议
 
-text
+本项目采用 MIT License 开源协议。代码仅用于个人学习与竞赛复习使用。
