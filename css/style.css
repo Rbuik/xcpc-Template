@@ -146,9 +146,10 @@ header {
 }
 
 .code-section h3 {
-    color: #2c3e50;
+    color: #3498db;
     margin-bottom: 0.5rem;
     font-size: 1.15rem;
+    font-weight: bold;
 }
 
 .desc {
