@@ -2,7 +2,7 @@ const categoryList = document.getElementById('category-list');
 const codeContainer = document.getElementById('code-container');
 const searchInput = document.getElementById('search-input');
 
-let allData = []; 
+let allData = [];
 
 async function init() {
     try {
@@ -13,8 +13,10 @@ async function init() {
         
         allData = await response.json();
         
+        // 提取所有不重复的目录名
         const categories = [...new Set(allData.map(item => item.category))];
         
+        // 初始化左侧菜单
         categories.forEach((catName, index) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -43,17 +45,20 @@ async function init() {
     }
 }
 
+// 渲染某个分类下的所有代码
 function renderCategory(catName) {
     const filtered = allData.filter(item => item.category === catName);
     renderData(filtered);
 }
 
+// 全局搜索
 function filterCards() {
     const keyword = searchInput.value.toLowerCase().trim();
     
     if (keyword === '') {
         const activeA = document.querySelector('.sidebar a.active');
         if (activeA) renderCategory(activeA.textContent);
+        else renderCategory("基础知识");
         return;
     }
 
