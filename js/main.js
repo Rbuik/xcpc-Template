@@ -103,25 +103,29 @@ function filterCards() {
     applyFontSize();
 }
 
+// ================= 超级无敌高亮函数 =================
 function highlightCode(code) {
-    // 转义 HTML
+    // 第一步：先把字符串整体转义，防止 < > 破坏 HTML 结构
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[tag]));
     
-    // 按行拆分
+    // 第二步：按行拆分
     let lines = escaped.split('\n');
+    
     for(let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-        // 查找以 < 开头的行
-        if (line.startsWith('&lt;')) {
-            // 去掉 &lt; 并加上蓝色样式
+        // 查找这行是否以 &lt; 开头（也就是你写的 <）
+        let trimmed = lines[i].trim();
+        if (trimmed.startsWith('&lt;')) {
+            // 把 &lt; 删掉，然后套上蓝色的样式
             let text = lines[i].replace('&lt;', '').trim();
             lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + text + '</span>';
         }
     }
+    
     return lines.join('\n');
 }
+// ======================================================
 
 // 字体缩放
 let currentFontSize = 100; 
