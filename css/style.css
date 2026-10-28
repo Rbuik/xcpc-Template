@@ -1,262 +1,44 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f5f7fb;
-    color: #333;
-    line-height: 1.6;
-    height: 100vh;
+/* ================= 字体大小调节按钮样式 ================= */
+.font-controls {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
     display: flex;
-    flex-direction: column; /* 上下结构：头部 + 内容 */
-    overflow: hidden; /* 禁止整个网页滚动 */
+    gap: 10px;
+    z-index: 1000;
 }
 
-header {
+.font-controls button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     background: #2c3e50;
     color: white;
-    padding: 1.5rem; /* 稍微减小头部的内边距 */
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    flex-shrink: 0; /* 保证头部不被挤压 */
-}
-
-/* 核心修改：主容器占满剩余高度，左右分栏独立滚动 */
-.container {
-    display: flex;
-    max-width: 1400px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1rem 1rem 0 1rem; /* 上方留点空隙 */
-    gap: 2rem;
-    flex: 1; /* 占据剩余空间 */
-    overflow: hidden; /* 内部各自滚动，外层不滚 */
-}
-
-/* 侧边栏独立滚动 */
-.sidebar {
-    width: 280px;
-    background: white;
-    border-radius: 10px 10px 0 0; /* 顶部圆角 */
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    height: 100%; /* 占满容器高度 */
-    overflow-y: auto; /* 允许侧边栏内部滚动 */
-}
-
-/* 隐藏滚动条（可选，为了美观） */
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-}
-
-.sidebar h2 {
     font-size: 1.2rem;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
-}
-
-/* 左侧搜索框 */
-.search-box {
-    margin-bottom: 1.5rem;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 0.95rem;
-    border: 2px solid #e1e8ed;
-    border-radius: 6px;
-    outline: none;
-    transition: all 0.3s;
-}
-
-.search-box input:focus {
-    border-color: #3498db;
-    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
-}
-
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar li {
-    margin-bottom: 0.5rem;
-}
-
-.sidebar a {
-    text-decoration: none;
-    color: #555;
-    display: block;
-    padding: 0.5rem 0.8rem;
-    border-radius: 5px;
-    transition: all 0.2s;
-}
-
-.sidebar a:hover, .sidebar a.active {
-    background: #e1f0fa;
-    color: #3498db;
     font-weight: bold;
-}
-
-/* 主内容区独立滚动 */
-.content {
-    flex: 1;
-    background: white;
-    border-radius: 10px 10px 0 0;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    height: 100%; /* 占满容器高度 */
-    overflow-y: auto; /* 允许右侧代码区内部滚动 */
-}
-
-/* 隐藏滚动条（可选） */
-.content::-webkit-scrollbar {
-    width: 8px;
-}
-.content::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 4px;
-}
-
-/* 首页欢迎语 */
-.welcome {
-    text-align: center;
-    color: #666;
-    margin-top: 20vh; 
-}
-
-.welcome h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #2c3e50;
-}
-
-.welcome p {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.welcome code {
-    background: #e1f0fa;
-    color: #3498db;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-}
-
-/* 代码块样式 */
-.code-section {
-    margin-bottom: 2.5rem;
-}
-
-.code-section h3 {
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    font-size: 1.15rem;
+    justify-content: center;
 }
 
-.desc {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    padding-left: 0.5rem;
-    border-left: 4px solid #3498db;
-    background: #f8f9fa;
-    padding: 0.5rem 1rem;
-    border-radius: 0 5px 5px 0;
+.font-controls button:hover {
+    background: #3498db;
+    transform: scale(1.1);
 }
 
-pre {
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 1.5rem;
-    border-radius: 8px;
-    overflow-x: auto;
-    font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    /* 强制代码在放不下时自动换行 */
-    white-space: pre-wrap;       
-    word-wrap: break-word;       
-    word-break: break-all;       
-}
-
-code {
-    font-family: inherit;
-}
-
-/* ================= 手机端自适应 ================= */
+/* 确保手机端按钮不挡视线，改到右下角偏上的位置 */
 @media (max-width: 768px) {
-    body {
-        overflow: auto; /* 手机端允许整个页面滚动 */
-        height: auto;
-        display: block;
+    .font-controls {
+        right: 15px;
+        bottom: 15px;
     }
-    
-    .container {
-        flex-direction: column;
-        padding: 0 0.5rem;
-        gap: 1rem;
-        margin: 1rem auto;
-        height: auto;
-        overflow: visible;
-    }
-    
-    .sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 40vh; /* 手机上左侧只占40%高度，内部滚动 */
-        overflow-y: auto;
-        padding: 1rem;
-    }
-    
-    .sidebar ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .sidebar li {
-        margin-bottom: 0;
-    }
-    
-    .sidebar a {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.9rem;
-        background: #f0f4f8;
-        border-radius: 4px;
-    }
-    
-    .search-box {
-        margin-bottom: 1rem;
-    }
-    
-    .content {
-        padding: 1rem;
-        height: auto;
-        overflow: visible;
-    }
-    
-    .welcome {
-        margin-top: 10vh;
-    }
-    
-    .welcome h2 {
-        font-size: 1.4rem;
-    }
-    
-    pre {
-        padding: 1rem;
-        font-size: 0.85rem;
+    .font-controls button {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }
