@@ -79,6 +79,7 @@
       "sort(a,a+n) 从小到大",
       "sort(a,a+n,greater<int>()) 从大到小",
       "sort(a,a+n,cmp) 自定义排序",
+      "",
       "< 字符排序",
       "sort(a.begin(),a.end())",
       "",
