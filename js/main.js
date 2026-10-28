@@ -21,7 +21,6 @@ async function init() {
         
         allData = await response.json();
         
-        // 提取所有不重复的分类
         const categories = [...new Set(allData.map(item => item.category))];
         
         // 1. 生成“首页”按钮
@@ -85,7 +84,6 @@ function initFontSize() {
 
 function changeFontSize(delta) {
     currentFontSize += delta * 10; 
-    // 字体范围扩大到 50% 到 250%
     if (currentFontSize < 50) currentFontSize = 50;
     if (currentFontSize > 250) currentFontSize = 250;
 
@@ -96,13 +94,11 @@ function changeFontSize(delta) {
 function applyFontSize() {
     const scale = currentFontSize / 100;
     
-    // 缩放右侧的代码文字和说明文字
     const codeElements = document.querySelectorAll('pre code, .desc, .welcome p, .welcome h2');
     codeElements.forEach(el => {
         el.style.fontSize = `${scale}em`; 
     });
     
-    // 缩放左侧菜单文字
     const menuElements = document.querySelectorAll('.sidebar a');
     menuElements.forEach(el => {
         el.style.fontSize = `${scale}em`;
@@ -131,9 +127,10 @@ function filterCards() {
     }
 
     const matched = allData.filter(item => {
+        let codeText = Array.isArray(item.code) ? item.code.join('\n') : item.code;
         return item.title.toLowerCase().includes(keyword) || 
                item.description.toLowerCase().includes(keyword) ||
-               item.code.toLowerCase().includes(keyword) ||
+               codeText.toLowerCase().includes(keyword) ||
                item.category.toLowerCase().includes(keyword);
     });
 
@@ -178,40 +175,18 @@ function escapeHTML(str) {
 
 // 精准高亮代码块里的二级标题
 function highlightCode(code, title) {
-    let escaped = escapeHTML(code);
-    
-    // 把标题拆解，比如 "Sort 与 Math" 拆成 "Sort" 和 "Math"
-    let titles = title.split(/与|和/).map(t => t.trim().replace(/[\(（].*?[\)）]/g, '').trim());
-    
+    let rawCode = Array.isArray(code) ? code.join('\n') : code;
+    let escaped = escapeHTML(rawCode);
     let lines = escaped.split('\n');
+    
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
-        
-        // 如果这行是空的，跳过
         if (line === '') continue;
 
-        // 检查这一行是不是我们要的标题
-        let isTitle = false;
-        for(let t of titles) {
-            if (line === t || line === '// ' + t || line === '//' + t) {
-                isTitle = true;
-                break;
-            }
-            // 针对纯中文短句（比如 "最大公约数"）兜底
-            if (/^[\u4e00-\u9fa5]+$/.test(line) && line.length <= 10) {
-                isTitle = true;
-                break;
-            }
-        }
-
-        // 如果这一行是以“问”开头，或者包含代码符号（;{}），绝对不标蓝
-        if (line.startsWith('问') || /[;{}]/.test(line)) {
-            isTitle = false;
-        }
-
-        if (isTitle) {
-            // 删除了 display: block; 让标题和后面的代码紧紧挨着
-            lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + lines[i] + '</span>';
+        // 只要以 < 开头，就变蓝，并去掉 <
+        if (line.startsWith('<')) {
+            let titleText = line.substring(1).trim();
+            lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + titleText + '</span>';
         }
     }
     
