@@ -21,7 +21,7 @@
 ```text
 ├── css/
 │   └── style.css          # 页面样式表（含PC端独立滚动、手机端自适应、字体缩放、深色代码主题）
-├── javascript/
+├── js/
 │   └── main.js            # 核心逻辑（数据加载、分类渲染、全局搜索、字体缩放记忆、代码高亮）
 ├── data/
 │   └── all.json           # 所有算法模板的数据源（含26个分类）
@@ -43,7 +43,11 @@ json
     "category": "基础模板",
     "title": "新的算法名称",
     "description": "算法的简单说明",
-    "code": "// 在这里写你的 C++ 代码\n#include<bits/stdc++.h>..."
+    "code": [
+        "< 新的二级标题",
+        "// 在这里写你的 C++ 代码",
+        "#include<bits/stdc++.h>..."
+    ]
 }
 ```
 ⚠️注意：
