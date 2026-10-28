@@ -2,7 +2,7 @@ const categoryList = document.getElementById('category-list');
 const codeContainer = document.getElementById('code-container');
 const searchInput = document.getElementById('search-input');
 
-let allData = [];
+let allData = []; 
 
 async function init() {
     try {
@@ -27,7 +27,7 @@ async function init() {
                 e.preventDefault();
                 document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
                 a.classList.add('active');
-                searchInput.value = '';
+                searchInput.value = ''; 
                 renderCategory(catName);
             };
             li.appendChild(a);
