@@ -84,9 +84,10 @@ function initFontSize() {
 
 function changeFontSize(delta) {
     currentFontSize += delta * 10; 
-    // 限制缩放范围 70% 到 150%
-    if (currentFontSize < 70) currentFontSize = 70;
-    if (currentFontSize > 150) currentFontSize = 150;
+    
+    // 核心：把限制范围扩大到 50% 到 250%
+    if (currentFontSize < 50) currentFontSize = 50;
+    if (currentFontSize > 250) currentFontSize = 250;
 
     applyFontSize();
     localStorage.setItem('fontSize', currentFontSize);
