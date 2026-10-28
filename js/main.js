@@ -57,9 +57,12 @@ async function loadContent(file) {
         });
         
         codeContainer.innerHTML = html;
+
+        // 🌟 核心新增：每次加载完新内容后，让右侧区域滚动回最顶部
+        codeContainer.scrollTop = 0;
         
     } catch (error) {
-        codeContainer.innerHTML = `<p style="color:red;">加载失败：${error.message}。请确保您已通过本地服务器或 GitHub Pages 运行此页面。</p>`;
+        codeContainer.innerHTML = `<p style="color:red;">加载失败：${error.message}。请检查你的文件是否存在或路径是否正确。</p>`;
     }
 }
 
