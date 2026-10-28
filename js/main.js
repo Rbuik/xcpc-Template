@@ -1,11 +1,9 @@
 // 配置所有分类及对应的 JSON 文件
 const dataSources = [
-    { id: 'basic', name: '📘 基础知识', file: 'data/basic.json' },
-    { id: 'string_math', name: '🔢 字符串与数学', file: 'data/string_math.json' },
-    { id: 'dp', name: '🧩 动态规划', file: 'data/dp.json' },
+    { id: 'basic', name: '📘 基础与高精度', file: 'data/basic.json' },
     { id: 'ds', name: '🌲 数据结构', file: 'data/ds.json' },
     { id: 'graph', name: '🕸️ 图论与树', file: 'data/graph.json' },
-    { id: 'others', name: '⚙️ 其他算法', file: 'data/others.json' }
+    { id: 'dp', name: '🧩 动态规划', file: 'data/dp.json' }
 ];
 
 const categoryList = document.getElementById('category-list');
