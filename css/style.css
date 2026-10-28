@@ -9,36 +9,51 @@ body {
     background-color: #f5f7fb;
     color: #333;
     line-height: 1.6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* 上下结构：头部 + 内容 */
+    overflow: hidden; /* 禁止整个网页滚动 */
 }
 
 header {
     background: #2c3e50;
     color: white;
-    padding: 2rem;
+    padding: 1.5rem; /* 稍微减小头部的内边距 */
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* 保证头部不被挤压 */
 }
 
-/* 电脑端左右布局居中 */
+/* 核心修改：主容器占满剩余高度，左右分栏独立滚动 */
 .container {
     display: flex;
     max-width: 1400px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem 1rem 0 1rem; /* 上方留点空隙 */
     gap: 2rem;
-    min-height: 80vh;
+    flex: 1; /* 占据剩余空间 */
+    overflow: hidden; /* 内部各自滚动，外层不滚 */
 }
 
-/* 侧边栏 */
+/* 侧边栏独立滚动 */
 .sidebar {
     width: 280px;
     background: white;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0; /* 顶部圆角 */
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    height: fit-content;
-    position: sticky;
-    top: 20px;
+    height: 100%; /* 占满容器高度 */
+    overflow-y: auto; /* 允许侧边栏内部滚动 */
+}
+
+/* 隐藏滚动条（可选，为了美观） */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
 }
 
 .sidebar h2 {
@@ -92,14 +107,24 @@ header {
     font-weight: bold;
 }
 
-/* 主内容区 */
+/* 主内容区独立滚动 */
 .content {
     flex: 1;
     background: white;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    overflow-x: hidden;
+    height: 100%; /* 占满容器高度 */
+    overflow-y: auto; /* 允许右侧代码区内部滚动 */
+}
+
+/* 隐藏滚动条（可选） */
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+.content::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
 }
 
 /* 首页欢迎语 */
@@ -160,7 +185,7 @@ pre {
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     font-size: 0.95rem;
     line-height: 1.5;
-    /* 关键：允许文字在放不下时自动换行，防止挤成一条线 */
+    /* 强制代码在放不下时自动换行 */
     white-space: pre-wrap;       
     word-wrap: break-word;       
     word-break: break-all;       
@@ -172,16 +197,26 @@ code {
 
 /* ================= 手机端自适应 ================= */
 @media (max-width: 768px) {
+    body {
+        overflow: auto; /* 手机端允许整个页面滚动 */
+        height: auto;
+        display: block;
+    }
+    
     .container {
         flex-direction: column;
         padding: 0 0.5rem;
         gap: 1rem;
         margin: 1rem auto;
+        height: auto;
+        overflow: visible;
     }
     
     .sidebar {
         width: 100%;
-        position: static;
+        height: auto;
+        max-height: 40vh; /* 手机上左侧只占40%高度，内部滚动 */
+        overflow-y: auto;
         padding: 1rem;
     }
     
@@ -208,6 +243,8 @@ code {
     
     .content {
         padding: 1rem;
+        height: auto;
+        overflow: visible;
     }
     
     .welcome {
