@@ -19,11 +19,11 @@ header {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* 恢复宽屏居中，与截图完全一致 */
+/* 电脑端左右布局居中 */
 .container {
     display: flex;
-    max-width: 1400px; /* 保证足够宽 */
-    margin: 2rem auto; /* 完美居中 */
+    max-width: 1400px;
+    margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
     min-height: 80vh;
@@ -49,6 +49,7 @@ header {
     color: #2c3e50;
 }
 
+/* 左侧搜索框 */
 .search-box {
     margin-bottom: 1.5rem;
 }
@@ -101,11 +102,11 @@ header {
     overflow-x: hidden;
 }
 
-/* 首页欢迎语居中样式 */
+/* 首页欢迎语 */
 .welcome {
     text-align: center;
     color: #666;
-    margin-top: 25vh; 
+    margin-top: 20vh; 
 }
 
 .welcome h2 {
@@ -119,6 +120,13 @@ header {
     margin-bottom: 0.5rem;
 }
 
+.welcome code {
+    background: #e1f0fa;
+    color: #3498db;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
 /* 代码块样式 */
 .code-section {
     margin-bottom: 2.5rem;
@@ -127,6 +135,8 @@ header {
 .code-section h3 {
     color: #2c3e50;
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
     font-size: 1.15rem;
 }
 
@@ -150,8 +160,66 @@ pre {
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     font-size: 0.95rem;
     line-height: 1.5;
+    /* 关键：允许文字在放不下时自动换行，防止挤成一条线 */
+    white-space: pre-wrap;       
+    word-wrap: break-word;       
+    word-break: break-all;       
 }
 
 code {
     font-family: inherit;
+}
+
+/* ================= 手机端自适应 ================= */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 0 0.5rem;
+        gap: 1rem;
+        margin: 1rem auto;
+    }
+    
+    .sidebar {
+        width: 100%;
+        position: static;
+        padding: 1rem;
+    }
+    
+    .sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .sidebar li {
+        margin-bottom: 0;
+    }
+    
+    .sidebar a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+        background: #f0f4f8;
+        border-radius: 4px;
+    }
+    
+    .search-box {
+        margin-bottom: 1rem;
+    }
+    
+    .content {
+        padding: 1rem;
+    }
+    
+    .welcome {
+        margin-top: 10vh;
+    }
+    
+    .welcome h2 {
+        font-size: 1.4rem;
+    }
+    
+    pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
 }
