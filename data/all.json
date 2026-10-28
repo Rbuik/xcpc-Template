@@ -11,11 +11,17 @@
     "description": "字符串操作与进制转换",
     "code": "拼接：strcat(s1,s2) [把s2接在s1后面]\n复制：strcpy(s1,s2) [把s1变成s2]\n比大小：strcmp(s1,s2) [s1=s2时 返回值为0]\n反转：reverse(s.begin(),s.end())\n删除：s.erase(idx,n) [从下标idx开始删除n个字符]\n删除：s.erase(idx) [删到末尾]\n提取：s2=s1.substr(idx,n) [从下标idx开始提取n个字符]\n提取：s2=s1.substr(idx) [提取到末尾]\n带空格输入：getline(cin,s)\nb在a中第一次出现的下标：a.find(b)\n结构体字节长度：sizeof(struct p)\n\n类型转换\nstring s=to_string(n); 转成字符串\nint n=stoll(s); 字符串转成LL类型\n\n进制转换\nprintf(\"%lld\", num); 转十进制\nprintf(\"%llx\", num); 转十六进制 [小写出小写，大写出大写]\nprintf(\"%llo\", num); 转八进制\nint a =stoi(\"1011\",nullptr,2); [二转十]\nint b =stoi(\"12\",nullptr,8);   [八转十]\nint c=stoi(\"A3\",nullptr,16);   [十六转十] [long long用stoll]\n\n补零\nleft<<setfill('0')<<setw(4)<<sum;\nright<<setfill('0')<<setw(4)<<sum;\n左对齐: left<<setw(4)<<sum;\n右对齐: right<<setw(4)<<sum;\nprintf(\"%05d\", 23);   // 输出: 00023\nprintf(\"%03d\", 5);    // 输出: 005"
   },
+    {
+    "category": "基础知识",
+    "title": "Sort 排序",
+    "description": "数字排序与字符排序",
+    "code": "数字排序\nsort(a,a+n) 从小到大\nsort(a,a+n,greater<int>()) 从大到小\nsort(a,a+n,cmp) 自定义排序\n字符排序\nsort(a.begin(),a.end())\n\n初始化数组\nmemset(a,0,sizeof(a));"
+  },
   {
     "category": "基础知识",
-    "title": "Sort 与 Math",
-    "description": "排序与数学函数",
-    "code": "数字排序\nsort(a,a+n)从小到大\nsort(a,a+n,greater<int>())从大到小\nsort(a,a+n,cmp)自定义排序\n字符排序\nsort(a.begin(),a.end())\n\nMath\n向下取整：floor(x) 向上取整: ceil(x)\n最大公约数：gcd(x,y) 最小公倍数: x/gcd(x,y)*y\n取绝对值：abs(x)\n取根号：sqrt(x)\n次方：pow(x,y)\n四舍五入：round(x)\n\n初始化数组\nmemset(a,0,sizeof(a));"
+    "title": "Math 数学函数",
+    "description": "向下/上取整、GCD、LCM、取绝对值、开根号、次方等",
+    "code": "向下取整：floor(x) 向上取整: ceil(x)\n最大公约数：gcd(x,y) 最小公倍数: x/gcd(x,y)*y\n取绝对值：abs(x)\n取根号：sqrt(x)\n次方：pow(x,y)\n四舍五入：round(x)"
   },
   {
     "category": "基础知识",
