@@ -8,7 +8,7 @@ const welcomeHTML = `
     <div class="welcome">
         <h2>👋 欢迎使用算法模板库</h2>
         <p>请选择分类，或在搜索框中搜索算法关键字。</p>
-        <p>代码风格：C++|所有代码均为伪码</p>
+        <p>代码风格：C++ | 所有代码均为伪码</p>
     </div>
 `;
 
@@ -26,15 +26,14 @@ async function init() {
         const homeA = document.createElement('a');
         homeA.href = '#';
         homeA.textContent = '🏠 首页';
-                homeA.onclick = (e) => {
+        homeA.onclick = (e) => {
             e.preventDefault();
             document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
             homeA.classList.add('active');
             searchInput.value = ''; 
             codeContainer.innerHTML = welcomeHTML;
-            
-            // 核心修改：回到顶部
             codeContainer.scrollTop = 0; 
+            applyFontSize();
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
@@ -56,8 +55,10 @@ async function init() {
             categoryList.appendChild(li);
         });
 
+        // 初始化操作
         homeA.click();
         initFontSize();
+        loadTheme();
 
     } catch (error) {
         codeContainer.innerHTML = `<div style="color:red; text-align:center; margin-top:20vh;">❌ 加载失败：${error.message}</div>`;
@@ -78,10 +79,7 @@ function renderCategory(catName) {
         `;
     });
     codeContainer.innerHTML = html;
-    
-    // 核心修改：让右侧内容区立即回到顶部
     codeContainer.scrollTop = 0; 
-    
     applyFontSize();
 }
 
@@ -108,76 +106,66 @@ function filterCards() {
         `;
     });
     codeContainer.innerHTML = html || '<p style="text-align:center; margin-top:20vh;">未找到 🔍</p>';
-    
-    // 核心修改：让右侧内容区立即回到顶部
     codeContainer.scrollTop = 0; 
-    
     applyFontSize();
 }
 
-// =============== 超级无敌高亮函数 ===============
-// 精准高亮代码块里的二级标题
-// 精准高亮代码块里的二级标题
+// 高亮函数
 function highlightCode(code) {
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[tag]));
     
     let lines = escaped.split('\n');
-    
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
-        
-        // 识别 < 标题，变蓝、加粗，并放大字体
         if (line.startsWith('&lt;')) {
             let text = lines[i].replace('&lt;', '').trim();
-            lines[i] = '<span style="color: #569cd6; font-weight: bold; font-size: 1.25em; display: inline-block; margin-top: 5px;">' + text + '</span>';
+            lines[i] = '<span class="code-title">' + text + '</span>';
         }
     }
-    
     return lines.join('\n');
 }
-// ===============================================
 
-// =====================字体缩放===================
+// ================= 字体缩放逻辑 =================
 let currentFontSize = 100; 
+
 function initFontSize() {
     const savedSize = localStorage.getItem('fontSize');
-    if (savedSize) currentFontSize = parseInt(savedSize);
+    if (savedSize) {
+        currentFontSize = parseInt(savedSize);
+    }
     applyFontSize();
 }
+
 function changeFontSize(delta) {
     currentFontSize += delta * 10; 
     if (currentFontSize < 50) currentFontSize = 50;
     if (currentFontSize > 250) currentFontSize = 250;
+
     applyFontSize();
     localStorage.setItem('fontSize', currentFontSize);
 }
+
 function applyFontSize() {
     const scale = currentFontSize / 100;
     document.querySelectorAll('pre code').forEach(el => {
         el.style.fontSize = `${scale}em`; 
     });
 }
-// ===============================================
 
 // ================= 主题切换逻辑 =================
 function changeTheme(themeName) {
-    // 设置根元素的 data-theme 属性
     document.documentElement.setAttribute('data-theme', themeName);
-    // 保存到本地缓存
     localStorage.setItem('siteTheme', themeName);
 }
 
 function loadTheme() {
-    // 页面加载时读取缓存的颜色
     const savedTheme = localStorage.getItem('siteTheme') || 'blue';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    // 让下拉框的选中状态同步
     const selectEl = document.getElementById('theme-select');
     if (selectEl) selectEl.value = savedTheme;
 }
-// ===============================================
 
+// 启动
 init();
-loadTheme();
