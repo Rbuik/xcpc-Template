@@ -115,7 +115,7 @@ function filterCards() {
     applyFontSize();
 }
 
-// ================= 超级无敌高亮函数 =================
+// =============== 超级无敌高亮函数 ===============
 // 精准高亮代码块里的二级标题
 // 精准高亮代码块里的二级标题
 function highlightCode(code) {
@@ -137,9 +137,9 @@ function highlightCode(code) {
     
     return lines.join('\n');
 }
-// ======================================================
+// ===============================================
 
-// 字体缩放
+// =====================字体缩放===================
 let currentFontSize = 100; 
 function initFontSize() {
     const savedSize = localStorage.getItem('fontSize');
@@ -159,5 +159,25 @@ function applyFontSize() {
         el.style.fontSize = `${scale}em`; 
     });
 }
+// ===============================================
+
+// ================= 主题切换逻辑 =================
+function changeTheme(themeName) {
+    // 设置根元素的 data-theme 属性
+    document.documentElement.setAttribute('data-theme', themeName);
+    // 保存到本地缓存
+    localStorage.setItem('siteTheme', themeName);
+}
+
+function loadTheme() {
+    // 页面加载时读取缓存的颜色
+    const savedTheme = localStorage.getItem('siteTheme') || 'blue';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    // 让下拉框的选中状态同步
+    const selectEl = document.getElementById('theme-select');
+    if (selectEl) selectEl.value = savedTheme;
+}
+// ===============================================
 
 init();
+loadTheme();
