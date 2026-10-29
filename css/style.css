@@ -21,7 +21,11 @@
 }
 
 /* 落日橙 */
-[data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
+[data-theme="orange"] { 
+    --primary-color: #d35400; /* 顶栏深橙色，搭配起来更好看 */
+    --accent-color: #FF8337;  /* 你想要的亮橙色高亮 */
+    --accent-bg: #fff3e0;     /* 极浅橙色背景 */
+}
 
 /* 深邃紫 */
 [data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
