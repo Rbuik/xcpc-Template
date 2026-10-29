@@ -115,7 +115,7 @@ function highlightCode(code) {
     let lines = escaped.split('\n');
     
     for(let i = 0; i < lines.length; i++) {
-        // 查找这行是否以 &lt; 开头（也就是你写的 <）
+        // 查找这行是否以 &lt; 开头（也就是"<"）
         let trimmed = lines[i].trim();
         if (trimmed.startsWith('&lt;')) {
             // 把 &lt; 删掉，然后套上蓝色的样式
