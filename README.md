@@ -32,7 +32,7 @@
 
 ## 🚀 本地预览与部署
 
-- 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VSCode 的 Live Server 插件，或在目录下运行 [python -m http.server 8000] 进行预览。
+- 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VSCode 的 [Live Server] 插件，或在目录下运行 [python -m http.server 8000] 进行预览。
 - 在线访问：已部署至 GitHub Pages，可直接访问 https://Rbuik.github.io/xcpc-Template/
 
 ## 🛠️ 如何添加新算法
