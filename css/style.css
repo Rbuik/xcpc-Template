@@ -171,14 +171,14 @@ code { font-family: inherit; }
     display: inline-block; margin-top: 5px; margin-bottom: 2px;
 }
 
-/* ================= 悬浮字体大小调节按钮（白底黑字） ================= */
+/* ================= 悬浮字体大小调节按钮（白底，主题色字） ================= */
 .font-controls { position: fixed; right: 30px; bottom: 30px; display: flex; gap: 10px; z-index: 1000; }
 .font-controls button {
     width: 45px; height: 45px; border-radius: 50%;
     background: #ffffff !important; /* 强制白底 */
-    color: #333333 !important;      /* 强制系统默认黑字 */
+    color: var(--accent-color) !important; /* 字体颜色跟随主题 */
     font-size: 1.2rem; font-weight: bold; 
-    border: 1px solid #ccc;         /* 细灰边框 */
+    border: 1px solid var(--accent-color); /* 边框也跟随主题 */
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     display: flex; align-items: center; justify-content: center;
@@ -186,7 +186,7 @@ code { font-family: inherit; }
 }
 
 .font-controls button:hover { 
-    background: #f0f0f0 !important; /* 悬浮变浅灰 */
+    background: var(--accent-bg) !important; /* 悬浮时变成主题浅背景色 */
     transform: scale(1.1); 
 }
 
@@ -226,11 +226,11 @@ code { font-family: inherit; }
     color: #ccc;
 }
 
-/* 极客黑模式下强制 A- A+ 保持白底黑字 */
+/* 极客黑模式下强制 A- A+ 保持白底，字为暗黑模式的主题色(紫色) */
 [data-theme="dark"] .font-controls button {
     background: #ffffff !important;
-    color: #333333 !important;
-    border-color: #555;
+    color: var(--accent-color) !important; /* 暗黑模式的主题色是紫色 */
+    border-color: var(--accent-color) !important;
 }
 [data-theme="dark"] .font-controls button:hover {
     background: #e0e0e0 !important;
