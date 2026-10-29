@@ -8,7 +8,7 @@ const welcomeHTML = `
     <div class="welcome">
         <h2>👋 欢迎使用算法模板库</h2>
         <p>请选择分类，或在搜索框中搜索算法关键字。</p>
-        <p>代码风格：C++</p>
+        <p>代码风格：C++|所有代码均为伪码</p>
     </div>
 `;
 
