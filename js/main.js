@@ -110,7 +110,7 @@ function filterCards() {
     applyFontSize();
 }
 
-// 高亮函数
+// 高亮函数：二级标题变蓝/变色
 function highlightCode(code) {
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
