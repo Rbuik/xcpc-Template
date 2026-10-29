@@ -13,6 +13,14 @@
 [data-theme="green"] { --primary-color: #1e4d2b; --accent-color: #27ae60; --accent-bg: #e8f8f0; }
 [data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
 [data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
+
+/* 蓝绿色主题 */
+[data-theme="teal"] { 
+    --primary-color: #004d40; /* 深蓝绿（顶栏背景） */
+    --accent-color: #009688;  /* 亮蓝绿（标题和高亮） */
+    --accent-bg: #e0f2f1;     /* 极浅蓝绿（选中背景） */
+}
+
 /* 调浅后的樱花粉 */
 [data-theme="pink"] { 
     --primary-color: #d81b60; 
