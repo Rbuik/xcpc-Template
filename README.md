@@ -32,7 +32,7 @@
 
 ## 🚀 本地预览与部署
 
-- 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VS Code 的 Live Server 插件，或在目录下运行 python -m http.server 8000 进行预览。
+- 本地预览：由于使用了 fetch 读取 JSON 文件，请勿直接双击 index.html 打开。请使用 VSCode 的 Live Server 插件，或在目录下运行 [python -m http.server 8000] 进行预览。
 - 在线访问：已部署至 GitHub Pages，可直接访问 https://Rbuik.github.io/xcpc-Template/
 
 ## 🛠️ 如何添加新算法
@@ -52,8 +52,8 @@ json
 }
 ```
 ⚠️注意：
-- JSON 格式中的换行必须使用 \n。
-- 双引号必须转义为 \"。
+- 推荐使用数组形式 [] 来写代码，这样在源码里阅读更美观。
+- 标题前面加 <，网页上就会自动变色并放大，且隐藏 < 符号。
 - 最后一条记录后面不能有逗号。
 
 ## 📄 开源协议
