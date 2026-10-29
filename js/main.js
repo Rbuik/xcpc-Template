@@ -133,10 +133,6 @@ function highlightCode(code) {
             lines[i] = '<span style="color: #569cd6; font-weight: bold; font-size: 1.25em; display: inline-block; margin-top: 5px;">' + text + '</span>';
         }
         
-        // 2. 问：前面只加一个换行
-        if (line.startsWith('问：')) {
-            lines[i] = '\n' + lines[i];
-        }
     }
     
     return lines.join('\n');
