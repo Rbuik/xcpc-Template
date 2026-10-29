@@ -172,7 +172,8 @@ pre {
     overflow-x: auto;
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     font-size: 0.95rem;
-    line-height: 1.5;
+    /* 核心修改：把行高改小一点，这样空行就不会显得那么大 */
+    line-height: 1.2; 
     white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-all;
