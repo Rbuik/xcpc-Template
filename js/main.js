@@ -6,8 +6,8 @@ let allData = [];
 
 const welcomeHTML = `
     <div class="welcome">
-        <h2>👋欢迎使用算法模板库</h2>
-        <p>请选择分类，或在搜索框中搜索算法关键字</p>
+        <h2>👋 欢迎使用算法模板库</h2>
+        <p>请选择分类，或在搜索框中搜索算法关键字。</p>
         <p>代码风格：C++ | 所有代码均为伪码</p>
     </div>
 `;
@@ -110,8 +110,13 @@ function filterCards() {
     applyFontSize();
 }
 
-// 高亮函数：二级标题变蓝/变色
+// 高亮函数
 function highlightCode(code) {
+    // 如果是表格，原样返回，不转义
+    if (code.includes('<table>')) {
+        return code;
+    }
+
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[tag]));
