@@ -19,12 +19,14 @@
 [data-theme="orange"] {
     --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7;
 }
+/* 正宗的粉色 */
 [data-theme="pink"] {
-    --primary-color: #641e16; --accent-color: #e74c3c; --accent-bg: #fdedec;
+    --primary-color: #c2185b; --accent-color: #ff69b4; --accent-bg: #fce4ec;
 }
+/* 暗黑模式：紫色主题 */
 [data-theme="dark"] {
     --bg-color: #121212; --main-bg: #1e1e1e; --text-color: #e0e0e0;
-    --primary-color: #000000; --accent-color: #bb86fc; --accent-bg: #2c2c2c;
+    --primary-color: #1a1a1a; --accent-color: #bb86fc; --accent-bg: #3700b3;
     --code-bg: #0d0d0d;
 }
 
@@ -110,6 +112,10 @@ header {
     transition: border-color 0.3s, color 0.3s;
 }
 
+[data-theme="dark"] .sidebar h2 {
+    color: var(--accent-color);
+}
+
 .search-box {
     margin-bottom: 1.5rem;
     flex-shrink: 0;
@@ -149,6 +155,7 @@ header {
     font-size: 1rem;
 }
 
+/* 侧边栏选中的高亮 */
 .sidebar a:hover, .sidebar a.active {
     background: var(--accent-bg);
     color: var(--accent-color);
@@ -176,20 +183,25 @@ header {
     border-radius: 3px;
 }
 
+/* 完美居中 */
 .welcome {
-    text-align: center;
-    color: var(--text-color);
-    margin-top: 20vh; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--text-color);
 }
 
 .welcome h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
+}
+
+[data-theme="dark"] .welcome h2 {
+    color: var(--accent-color);
 }
 
 .code-section {
@@ -201,6 +213,10 @@ header {
     margin-bottom: 0.5rem;
     font-size: 1.15rem;
     font-weight: bold;
+}
+
+[data-theme="dark"] .code-section h3 {
+    color: var(--accent-color);
 }
 
 .desc {
@@ -234,7 +250,7 @@ code {
     font-family: inherit;
 }
 
-/* ================= 补充样式 ================= */
+/* 二级标题（代码里的高亮），自动跟随主题 */
 .code-title {
     color: var(--accent-color) !important;
     font-weight: bold;
@@ -271,6 +287,10 @@ code {
     justify-content: center;
 }
 
+[data-theme="dark"] .font-controls button {
+    background: var(--accent-color);
+}
+
 .font-controls button:hover {
     background: var(--accent-color);
     transform: scale(1.1);
@@ -285,12 +305,6 @@ code {
 
 [data-theme="dark"] .sidebar a {
     color: #ccc;
-}
-
-[data-theme="dark"] .sidebar a:hover, 
-[data-theme="dark"] .sidebar a.active {
-    background-color: var(--accent-bg);
-    color: var(--accent-color);
 }
 
 [data-theme="dark"] pre {
@@ -312,7 +326,7 @@ code {
     .sidebar a { padding: 0.4rem 0.6rem; font-size: 0.9rem; background: #f0f4f8; border-radius: 4px; }
     .search-box { margin-bottom: 1rem; }
     .content { padding: 1rem; height: auto; overflow: visible; }
-    .welcome { margin-top: 10vh; }
+    .welcome { margin-top: 10vh; height: auto; }
     .welcome h2 { font-size: 1.4rem; }
     pre { padding: 1rem; }
     .font-controls { right: 15px; bottom: 15px; }
