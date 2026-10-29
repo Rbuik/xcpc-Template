@@ -26,12 +26,15 @@ async function init() {
         const homeA = document.createElement('a');
         homeA.href = '#';
         homeA.textContent = '🏠 首页';
-        homeA.onclick = (e) => {
+                homeA.onclick = (e) => {
             e.preventDefault();
             document.querySelectorAll('.sidebar a').forEach(el => el.classList.remove('active'));
             homeA.classList.add('active');
             searchInput.value = ''; 
             codeContainer.innerHTML = welcomeHTML;
+            
+            // 核心修改：回到顶部
+            codeContainer.scrollTop = 0; 
         };
         homeLi.appendChild(homeA);
         categoryList.appendChild(homeLi);
@@ -75,6 +78,10 @@ function renderCategory(catName) {
         `;
     });
     codeContainer.innerHTML = html;
+    
+    // 核心修改：让右侧内容区立即回到顶部
+    codeContainer.scrollTop = 0; 
+    
     applyFontSize();
 }
 
@@ -101,6 +108,10 @@ function filterCards() {
         `;
     });
     codeContainer.innerHTML = html || '<p style="text-align:center; margin-top:20vh;">未找到 🔍</p>';
+    
+    // 核心修改：让右侧内容区立即回到顶部
+    codeContainer.scrollTop = 0; 
+    
     applyFontSize();
 }
 
