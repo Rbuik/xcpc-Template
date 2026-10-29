@@ -176,6 +176,16 @@ header {
     border-radius: 3px;
 }
 
+.welcome {
+    text-align: center;
+    color: var(--text-color);
+    margin-top: 20vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .welcome h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -224,6 +234,16 @@ code {
     font-family: inherit;
 }
 
+/* ================= 补充样式 ================= */
+.code-title {
+    color: var(--accent-color) !important;
+    font-weight: bold;
+    font-size: 1.25em;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
 /* ================= 悬浮字体大小调节按钮 ================= */
 .font-controls {
     position: fixed;
@@ -254,6 +274,32 @@ code {
 .font-controls button:hover {
     background: var(--accent-color);
     transform: scale(1.1);
+}
+
+/* ================= 暗黑模式特殊处理 ================= */
+[data-theme="dark"] .search-box input {
+    background-color: #2c2c2c;
+    color: white;
+    border-color: #444;
+}
+
+[data-theme="dark"] .sidebar a {
+    color: #ccc;
+}
+
+[data-theme="dark"] .sidebar a:hover, 
+[data-theme="dark"] .sidebar a.active {
+    background-color: var(--accent-bg);
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] pre {
+    border: 1px solid #333;
+}
+
+[data-theme="dark"] .desc {
+    background: #2c2c2c;
+    color: #aaa;
 }
 
 /* ================= 手机端自适应 ================= */
