@@ -116,22 +116,26 @@ function filterCards() {
 }
 
 // ================= 超级无敌高亮函数 =================
+// 精准高亮代码块里的二级标题
 function highlightCode(code) {
-    // 第一步：先把字符串整体转义，防止 < > 破坏 HTML 结构
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[tag]));
     
-    // 第二步：按行拆分
     let lines = escaped.split('\n');
     
     for(let i = 0; i < lines.length; i++) {
-        // 查找这行是否以 &lt; 开头（也就是"<"）
-        let trimmed = lines[i].trim();
-        if (trimmed.startsWith('&lt;')) {
-            // 把 &lt; 删掉，然后套上蓝色的样式
+        let line = lines[i].trim();
+        
+        // 1. 识别 < 标题，变蓝、加粗，并放大字体 (1.25em 会比普通代码大一号)
+        if (line.startsWith('&lt;')) {
             let text = lines[i].replace('&lt;', '').trim();
-            lines[i] = '<span style="color: #569cd6; font-weight: bold;">' + text + '</span>';
+            lines[i] = '<span style="color: #569cd6; font-weight: bold; font-size: 1.25em; display: inline-block; margin-top: 5px;">' + text + '</span>';
+        }
+        
+        // 2. 问：前面只加一个换行
+        if (line.startsWith('问：')) {
+            lines[i] = '\n' + lines[i];
         }
     }
     
