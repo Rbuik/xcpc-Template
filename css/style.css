@@ -1,41 +1,33 @@
 /* ================= 颜色主题变量 ================= */
 :root {
-    --bg-color: #f5f7fb;          /* 网页底色 */
-    --main-bg: #ffffff;           /* 卡片底色 */
-    --text-color: #333;           /* 主文字颜色 */
-    --primary-color: #2c3e50;     /* 深色（顶栏、按钮、选中） */
-    --accent-color: #3498db;      /* 浅色（高亮、线条） */
-    --accent-bg: #e1f0fa;         /* 极浅色（侧边栏悬停底色） */
-    --code-bg: #1e1e1e;           /* 代码块底色 */
+    --bg-color: #f5f7fb;          
+    --main-bg: #ffffff;           
+    --text-color: #333;           
+    --primary-color: #2c3e50;     
+    --accent-color: #3498db;      
+    --accent-bg: #e1f0fa;         
+    --code-bg: #1e1e1e;           
 }
 
 /* 预设的主题配色 */
-[data-theme="green"] {
-    --primary-color: #1e4d2b; --accent-color: #27ae60; --accent-bg: #e8f8f0;
-}
-[data-theme="purple"] {
-    --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7;
-}
-[data-theme="orange"] {
-    --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7;
-}
-/* 正宗的粉色 */
-[data-theme="pink"] {
-    --primary-color: #c2185b; --accent-color: #ff69b4; --accent-bg: #fce4ec;
-}
-/* 暗黑模式：强制紫色 */
+[data-theme="green"] { --primary-color: #1e4d2b; --accent-color: #27ae60; --accent-bg: #e8f8f0; }
+[data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
+[data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
+[data-theme="pink"] { --primary-color: #c2185b; --accent-color: #ff69b4; --accent-bg: #fce4ec; }
+
+/* 极客黑模式变量 */
 [data-theme="dark"] {
-    --bg-color: #121212; --main-bg: #1e1e1e; --text-color: #e0e0e0;
-    --primary-color: #1a1a1a; --accent-color: #bb86fc; --accent-bg: #3700b3;
+    --bg-color: #121212; 
+    --main-bg: #1e1e1e; 
+    --text-color: #e0e0e0;
+    --primary-color: #1a1a1a; 
+    --accent-color: #bb86fc; /* 亮紫色 */
+    --accent-bg: #3700b3;    /* 深紫色背景 */
     --code-bg: #0d0d0d;
 }
 
-/* ================= 全局应用变量 ================= */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* ================= 全局样式 ================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -54,29 +46,16 @@ header {
     color: white;
     padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     flex-shrink: 0;
-    transition: background-color 0.3s;
 }
 
-.theme-selector {
-    margin-top: 10px;
-    font-size: 0.9rem;
-}
+.theme-selector { margin-top: 10px; font-size: 0.9rem; }
 .theme-selector select {
-    padding: 4px 8px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    cursor: pointer;
+    padding: 4px 8px; border-radius: 4px; border: none;
+    background: rgba(255,255,255,0.2); color: white; cursor: pointer;
 }
-.theme-selector select option {
-    color: #333;
-}
+.theme-selector select option { color: #333; }
 
-/* 核心布局：左右独立滚动 */
 .container {
     display: flex;
     max-width: 1400px;
@@ -94,12 +73,10 @@ header {
     background: var(--main-bg);
     border-radius: 10px 10px 0 0;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     height: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s;
 }
 
 .sidebar h2 {
@@ -108,54 +85,24 @@ header {
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
-    flex-shrink: 0;
-    transition: border-color 0.3s, color 0.3s;
 }
 
-[data-theme="dark"] .sidebar h2 {
-    color: var(--accent-color);
-}
-
-.search-box {
-    margin-bottom: 1.5rem;
-    flex-shrink: 0;
-}
-
+.search-box { margin-bottom: 1.5rem; }
 .search-box input {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 0.95rem;
-    border: 2px solid #e1e8ed;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.3s;
+    width: 100%; padding: 10px 15px; font-size: 0.95rem;
+    border: 2px solid #e1e8ed; border-radius: 6px; outline: none;
 }
+.search-box input:focus { border-color: var(--accent-color); }
 
-.search-box input:focus {
-    border-color: var(--accent-color);
-}
-
-.sidebar ul {
-    list-style: none;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.sidebar li {
-    margin-bottom: 0.5rem;
-}
-
+.sidebar ul { list-style: none; flex: 1; overflow-y: auto; }
+.sidebar li { margin-bottom: 0.5rem; }
 .sidebar a {
-    text-decoration: none;
-    color: var(--text-color);
-    display: block;
-    padding: 0.5rem 0.8rem;
-    border-radius: 5px;
-    transition: all 0.2s;
-    font-size: 1rem;
+    text-decoration: none; color: var(--text-color);
+    display: block; padding: 0.5rem 0.8rem; border-radius: 5px;
+    transition: all 0.2s; font-size: 1rem;
 }
 
-/* 侧边栏选中的高亮 */
+/* 侧边栏悬浮和选中 */
 .sidebar a:hover, .sidebar a.active {
     background: var(--accent-bg);
     color: var(--accent-color);
@@ -168,165 +115,93 @@ header {
     background: var(--main-bg);
     border-radius: 10px 10px 0 0;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     height: 100%;
     overflow-y: auto;
-    transition: background-color 0.3s;
     display: flex;
     flex-direction: column;
 }
 
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 3px; }
 
-/* 完美居中 */
+/* 首页完美居中 */
 .welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1; /* 撑满剩余空间，实现绝对居中 */
-    text-align: center;
-    color: var(--text-color);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex: 1; text-align: center; color: var(--text-color);
 }
-
 .welcome h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-    font-weight: bold;
+    font-size: 2.2rem; margin-bottom: 1.5rem;
+    color: var(--primary-color); font-weight: bold;
 }
+.welcome p { font-size: 1.1rem; margin-bottom: 0.8rem; opacity: 0.8; }
 
-.welcome p {
-    font-size: 1.1rem;
-    margin-bottom: 0.8rem;
-    color: var(--text-color);
-    opacity: 0.8;
-}
-
-[data-theme="dark"] .welcome h2 {
-    color: var(--accent-color);
-}
-
-.code-section {
-    margin-bottom: 2.5rem;
-}
-
-.code-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.15rem;
-    font-weight: bold;
-}
-
-[data-theme="dark"] .code-section h3 {
-    color: var(--accent-color);
-}
+/* 卡片区块 */
+.code-section { margin-bottom: 2.5rem; }
+.code-section h3 { color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.15rem; }
 
 .desc {
-    color: var(--text-color);
-    opacity: 0.8;
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    padding-left: 0.5rem;
+    color: var(--text-color); opacity: 0.8; font-size: 0.95rem;
+    margin-bottom: 1rem; padding-left: 0.5rem;
     border-left: 4px solid var(--accent-color);
-    background: var(--bg-color);
-    padding: 0.5rem 1rem;
+    background: var(--bg-color); padding: 0.5rem 1rem;
     border-radius: 0 5px 5px 0;
 }
 
 pre {
-    background: var(--code-bg);
-    color: #d4d4d4;
-    padding: 1.5rem;
-    border-radius: 8px;
-    overflow-x: auto;
+    background: var(--code-bg); color: #d4d4d4;
+    padding: 1.5rem; border-radius: 8px; overflow-x: auto;
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-    font-size: 0.95rem;
-    line-height: 1.2;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    word-break: break-all;
-    transition: background-color 0.3s;
+    font-size: 0.95rem; line-height: 1.2;
+    white-space: pre-wrap; word-wrap: break-word; word-break: break-all;
 }
 
-code {
-    font-family: inherit;
-}
+code { font-family: inherit; }
 
-/* 二级标题（代码里的高亮），自动跟随主题 */
+/* 代码块里的标题自动跟随主题 */
 .code-title {
     color: var(--accent-color) !important;
-    font-weight: bold;
-    font-size: 1.25em;
-    display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 2px;
+    font-weight: bold; font-size: 1.25em;
+    display: inline-block; margin-top: 5px; margin-bottom: 2px;
 }
 
-/* ================= 悬浮字体大小调节按钮 ================= */
-.font-controls {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    display: flex;
-    gap: 10px;
-    z-index: 1000;
-}
-
+/* 悬浮按钮 */
+.font-controls { position: fixed; right: 30px; bottom: 30px; display: flex; gap: 10px; z-index: 1000; }
 .font-controls button {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 45px; height: 45px; border-radius: 50%;
+    background: var(--primary-color); color: white;
+    font-size: 1.2rem; font-weight: bold; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+}
+.font-controls button:hover { background: var(--accent-color); transform: scale(1.1); }
+
+/* ================= 🔥 极客黑模式强制变色 🔥 ================= */
+/* 标题、分类高亮、二级标题，全部强制变紫 */
+[data-theme="dark"] .sidebar h2,
+[data-theme="dark"] .sidebar a.active,
+[data-theme="dark"] .sidebar a:hover,
+[data-theme="dark"] .welcome h2,
+[data-theme="dark"] .code-section h3,
+[data-theme="dark"] .code-title,
+[data-theme="dark"] .theme-selector select,
+[data-theme="dark"] .font-controls button:hover {
+    color: #bb86fc !important;
 }
 
-[data-theme="dark"] .font-controls button {
-    background: var(--accent-color);
+/* 选中标签的背景强制深紫 */
+[data-theme="dark"] .sidebar a:hover, 
+[data-theme="dark"] .sidebar a.active {
+    background: #3700b3 !important; 
 }
 
-.font-controls button:hover {
-    background: var(--accent-color);
-    transform: scale(1.1);
-}
-
-/* ================= 暗黑模式特殊处理 ================= */
 [data-theme="dark"] .search-box input {
-    background-color: #2c2c2c;
-    color: white;
-    border-color: #444;
+    background-color: #2c2c2c; color: white; border-color: #444;
 }
+[data-theme="dark"] .sidebar a { color: #ccc; }
+[data-theme="dark"] pre { border: 1px solid #333; }
+[data-theme="dark"] .desc { background: #2c2c2c; color: #aaa; border-left-color: #bb86fc; }
 
-[data-theme="dark"] .sidebar a {
-    color: #ccc;
-}
-
-[data-theme="dark"] pre {
-    border: 1px solid #333;
-}
-
-[data-theme="dark"] .desc {
-    background: #2c2c2c;
-    color: #aaa;
-}
-
-/* ================= 手机端自适应 ================= */
+/* 手机端自适应 */
 @media (max-width: 768px) {
     body { overflow: auto; height: auto; display: block; }
     .container { flex-direction: column; padding: 0 0.5rem; gap: 1rem; margin: 1rem auto; height: auto; overflow: visible; }
