@@ -117,6 +117,7 @@ function filterCards() {
 
 // ================= 超级无敌高亮函数 =================
 // 精准高亮代码块里的二级标题
+// 精准高亮代码块里的二级标题
 function highlightCode(code) {
     let escaped = code.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -127,12 +128,11 @@ function highlightCode(code) {
     for(let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
         
-        // 1. 识别 < 标题，变蓝、加粗，并放大字体 (1.25em 会比普通代码大一号)
+        // 识别 < 标题，变蓝、加粗，并放大字体
         if (line.startsWith('&lt;')) {
             let text = lines[i].replace('&lt;', '').trim();
             lines[i] = '<span style="color: #569cd6; font-weight: bold; font-size: 1.25em; display: inline-block; margin-top: 5px;">' + text + '</span>';
         }
-        
     }
     
     return lines.join('\n');
