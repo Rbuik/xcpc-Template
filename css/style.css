@@ -15,7 +15,7 @@
 [data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
 [data-theme="pink"] { --primary-color: #c2185b; --accent-color: #ff69b4; --accent-bg: #fce4ec; }
 
-/* 极客黑模式 */
+/* 极客黑模式变量 */
 [data-theme="dark"] {
     --bg-color: #121212; 
     --main-bg: #1e1e1e; 
@@ -191,11 +191,15 @@ code { font-family: inherit; }
     color: #ffffff !important;
 }
 
-/* 极客黑模式：描述边框变白 */
+/* 极客黑模式：把紫色的线条变白 */
+[data-theme="dark"] .sidebar h2 {
+    border-bottom-color: #ffffff !important; /* 目录分类下面那条横线变白 */
+}
+
 [data-theme="dark"] .desc {
     background: #2c2c2c; 
     color: #aaa; 
-    border-left-color: #ffffff !important;
+    border-left-color: #ffffff !important; /* 描述文字左边那条竖线变白 */
 }
 
 [data-theme="dark"] .search-box input {
