@@ -14,11 +14,11 @@
 [data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
 [data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
 
-/* 蓝绿色主题 */
-[data-theme="teal"] { 
-    --primary-color: #00796b; /* 顶栏底色用深一点的蓝绿，保证白字看得清 */
-    --accent-color: #00897b;  /* 亮蓝绿（标题和高亮） */
-    --accent-bg: #B8E6E2;     /* 极浅蓝绿（选中背景，就是你指定的颜色） */
+/* 极光青 */
+[data-theme="cyan"] { 
+    --primary-color: #1b5e6b; /* 深青色顶栏 */
+    --accent-color: #41FDFE;  /* 极光青高亮 */
+    --accent-bg: #e0fbfc;     /* 极浅青色背景 */
 }
 
 /* 调浅后的樱花粉 */
