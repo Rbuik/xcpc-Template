@@ -266,3 +266,21 @@ code { font-family: inherit; }
     pre { padding: 1rem; }
     .font-controls { right: 15px; bottom: 15px; }
 }
+
+/* ================= 代码块内的表格样式 ================= */
+pre code table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    color: #d4d4d4; /* 字体颜色适配暗黑代码块 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* 表格用无衬线字体更好看 */
+}
+pre code td {
+    padding: 8px 12px;
+    border: 1px solid #555; /* 深灰色的边框 */
+}
+pre code td:first-child {
+    color: var(--accent-color); /* 第一列跟随主题色高亮 */
+    font-weight: bold;
+    width: 30%; /* 控制第一列宽度 */
+}
