@@ -9,26 +9,31 @@
     --code-bg: #1e1e1e;           
 }
 
-/* 预设主题 */
+/* 经典蓝默认在 :root，以下是其他主题 */
+/* 森林绿 */
 [data-theme="green"] { --primary-color: #1e4d2b; --accent-color: #27ae60; --accent-bg: #e8f8f0; }
-[data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
-[data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
 
 /* 极光青 */
 [data-theme="cyan"] { 
-    --primary-color: #1b5e6b; /* 深青色顶栏 */
-    --accent-color: #41FDFE;  /* 极光青高亮 */
-    --accent-bg: #e0fbfc;     /* 极浅青色背景 */
+    --primary-color: #1b5e6b; 
+    --accent-color: #41FDFE;  
+    --accent-bg: #e0fbfc;     
 }
 
-/* 调浅后的樱花粉 */
+/* 落日橙 */
+[data-theme="orange"] { --primary-color: #7e5109; --accent-color: #e67e22; --accent-bg: #fef5e7; }
+
+/* 深邃紫 */
+[data-theme="purple"] { --primary-color: #4a235a; --accent-color: #9b59b6; --accent-bg: #f4ecf7; }
+
+/* 樱花粉 */
 [data-theme="pink"] { 
     --primary-color: #d81b60; 
-    --accent-color: #ffb6c1; /* 浅粉色高亮 */
+    --accent-color: #ffb6c1; 
     --accent-bg: #fce4ec; 
 }
 
-/* 极客黑模式变量 */
+/* 极客黑 */
 [data-theme="dark"] {
     --bg-color: #121212; 
     --main-bg: #1e1e1e; 
@@ -116,7 +121,7 @@ header {
     transition: all 0.2s; font-size: 1rem;
 }
 
-/* 分类悬浮和选中（所有主题通用） */
+/* 分类悬浮和选中 */
 .sidebar a:hover, .sidebar a.active {
     background: var(--accent-bg);
     color: var(--accent-color);
@@ -172,7 +177,7 @@ pre {
 
 code { font-family: inherit; }
 
-/* 代码块里的二级标题（所有主题通用） */
+/* 代码块里的二级标题 */
 .code-title {
     color: var(--accent-color) !important;
     font-weight: bold; font-size: 1.25em;
@@ -237,8 +242,8 @@ code { font-family: inherit; }
 /* 极客黑模式下强制 A- A+ 保持白底，字为纯黑色 */
 [data-theme="dark"] .font-controls button {
     background: #ffffff !important;
-    color: #000000 !important; /* 纯黑字 */
-    border-color: #000000 !important; /* 纯黑边框 */
+    color: #000000 !important;
+    border-color: #000000 !important;
 }
 [data-theme="dark"] .font-controls button:hover {
     background: #e0e0e0 !important;
@@ -265,22 +270,4 @@ code { font-family: inherit; }
     .welcome h2 { font-size: 1.4rem; }
     pre { padding: 1rem; }
     .font-controls { right: 15px; bottom: 15px; }
-}
-
-/* ================= 代码块内的表格样式 ================= */
-pre code table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-    color: #d4d4d4; /* 字体颜色适配暗黑代码块 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* 表格用无衬线字体更好看 */
-}
-pre code td {
-    padding: 8px 12px;
-    border: 1px solid #555; /* 深灰色的边框 */
-}
-pre code td:first-child {
-    color: var(--accent-color); /* 第一列跟随主题色高亮 */
-    font-weight: bold;
-    width: 30%; /* 控制第一列宽度 */
 }
