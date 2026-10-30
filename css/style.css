@@ -282,4 +282,10 @@ code { font-family: inherit; }
     .welcome h2 { font-size: 1.4rem; }
     pre { padding: 1rem; }
     .font-controls { right: 15px; bottom: 15px; }
+
+    /* 手机端：使用系统默认字体 */
+    pre {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        padding: 1rem;
+    }
 }
